@@ -1,0 +1,107 @@
+---
+- name: Validate the execution boundary and identifiers
+  ansible.builtin.assert:
+    that:
+      - governed_resource_environment == 'lab'
+      - governed_resource_lab_root == '/tmp/automation-governance-lab'
+      - governed_resource_resource_name is string
+      - governed_resource_resource_name is match('^[a-z0-9][a-z0-9-]{0,62}$')
+      - governed_resource_request_id is string
+      - governed_resource_request_id is match('^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$')
+      - governed_resource_domain in ['virtualizacion', 'network', 'cloud', 'plataformas', 'seguridad', 'infraestructura', 'storage']
+      - governed_resource_use_case_id is string
+      - governed_resource_desired_state is mapping
+      - governed_resource_desired_state.tags is mapping
+      - governed_resource_desired_state.tags.owner | length > 0
+      - governed_resource_desired_state.tags.domain == governed_resource_domain
+      - governed_resource_desired_state.tags.environment == governed_resource_environment
+      - governed_resource_desired_state.tags.use_case_id == governed_resource_use_case_id
+      - governed_resource_desired_state.tags.cost_center | length > 0
+      - governed_resource_desired_state.tags.data_classification == 'synthetic'
+    fail_msg: Invalid workshop inputs or execution boundary
+  tags:
+    - always
+    - validate
+- name: Validate the domain specification
+  ansible.builtin.assert:
+    that:
+      - item in governed_resource_desired_state
+      - governed_resource_desired_state[item] | string | length > 0
+    fail_msg: Missing required field in domain specification
+  loop: '{{ governed_resource_required_fields }}'
+  tags:
+    - always
+    - validate
+- name: Create the domain state directory
+  ansible.builtin.file:
+    path: '{{ governed_resource_lab_root }}/{{ governed_resource_domain }}/resources'
+    state: directory
+    mode: '0700'
+  tags:
+    - apply
+- name: Create the output directory
+  ansible.builtin.file:
+    path: '{{ governed_resource_lab_root }}/{{ governed_resource_domain }}/outputs'
+    state: directory
+    mode: '0700'
+  tags:
+    - apply
+- name: Reconcile the synthetic resource
+  ansible.builtin.copy:
+    dest: '{{ governed_resource_lab_root }}/{{ governed_resource_domain }}/resources/{{ governed_resource_resource_name }}.json'
+    content: |
+      {{ governed_resource_desired_state | to_nice_json }}
+    mode: '0600'
+  notify: Record reconciled resource
+  tags:
+    - apply
+- name: Read back the synthetic resource
+  ansible.builtin.slurp:
+    src: '{{ governed_resource_lab_root }}/{{ governed_resource_domain }}/resources/{{ governed_resource_resource_name }}.json'
+  register: governed_resource_readback
+  when: not ansible_check_mode
+  tags:
+    - verify
+- name: Verify the stored specification
+  ansible.builtin.assert:
+    that:
+      - governed_resource_readback.content | b64decode | from_json == governed_resource_desired_state
+  when: not ansible_check_mode
+  tags:
+    - verify
+- name: Assemble the consumer output
+  ansible.builtin.set_fact:
+    governed_resource_output:
+      schema_version: '1.0'
+      request_id: '{{ governed_resource_request_id }}'
+      use_case_id: '{{ governed_resource_use_case_id }}'
+      domain: '{{ governed_resource_domain }}'
+      environment: '{{ governed_resource_environment }}'
+      resource_name: '{{ governed_resource_resource_name }}'
+      status: '{{ ''planned'' if ansible_check_mode else ''verified'' }}'
+      simulation: true
+      resource: '{{ governed_resource_desired_state }}'
+      evidence:
+        kind: local-simulation
+        resource_path: '{{ governed_resource_lab_root }}/{{ governed_resource_domain }}/resources/{{ governed_resource_resource_name
+          }}.json'
+  tags:
+    - output
+- name: Store the consumer output locally
+  ansible.builtin.copy:
+    dest: '{{ governed_resource_lab_root }}/{{ governed_resource_domain }}/outputs/{{ governed_resource_request_id }}-{{ governed_resource_resource_name
+      }}.json'
+    content: |
+      {{ governed_resource_output | to_nice_json }}
+    mode: '0600'
+  when: not ansible_check_mode
+  tags:
+    - output
+- name: Publish sanitized artifacts to controller
+  ansible.builtin.set_stats:
+    data:
+      governance_output: '{{ governed_resource_output }}'
+    per_host: false
+    aggregate: false
+  tags:
+    - output

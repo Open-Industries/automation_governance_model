@@ -1,0 +1,20 @@
+---
+governed_resource_domain: plataformas
+governed_resource_use_case_id: UC-PLT-001
+governed_resource_required_fields:
+  - image_digest
+  - namespace
+  - replicas
+  - health_path
+governed_resource_desired_state:
+  image_digest: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  namespace: governance-lab
+  replicas: 2
+  health_path: /health
+  tags:
+    owner: workshop-team
+    domain: plataformas
+    environment: lab
+    cost_center: training
+    use_case_id: UC-PLT-001
+    data_classification: synthetic

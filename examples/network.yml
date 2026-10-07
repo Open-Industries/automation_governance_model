@@ -1,0 +1,18 @@
+---
+governed_resource_domain: network
+governed_resource_use_case_id: UC-NET-001
+governed_resource_required_fields:
+  - vlan_id
+  - switchport
+  - acl
+governed_resource_desired_state:
+  vlan_id: 120
+  switchport: Ethernet1/1
+  acl: lab-restricted
+  tags:
+    owner: workshop-team
+    domain: network
+    environment: lab
+    cost_center: training
+    use_case_id: UC-NET-001
+    data_classification: synthetic

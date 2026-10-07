@@ -1,0 +1,18 @@
+---
+governed_resource_domain: seguridad
+governed_resource_use_case_id: UC-SEC-001
+governed_resource_required_fields:
+  - profile
+  - certificate_ref
+  - compliance_policy
+governed_resource_desired_state:
+  profile: lab-baseline
+  certificate_ref: synthetic-cert-ref
+  compliance_policy: lab-policy
+  tags:
+    owner: workshop-team
+    domain: seguridad
+    environment: lab
+    cost_center: training
+    use_case_id: UC-SEC-001
+    data_classification: synthetic

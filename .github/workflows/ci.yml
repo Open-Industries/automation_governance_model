@@ -1,0 +1,64 @@
+---
+name: Governance CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  content:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install PyYAML==6.0.2
+      - run: python scripts/build_site.py
+      - run: python scripts/validate_content.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: local-docs-preview
+          path: public
+  ansible-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r requirements-dev.txt
+      - run: yamllint .
+      - run: ansible-lint playbooks roles molecule
+      - name: Syntax check all domain playbooks
+        run: |
+          for playbook in playbooks/*.yml; do
+            ansible-playbook --syntax-check "$playbook"
+          done
+  molecule:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r requirements-dev.txt
+      - run: molecule test
+      - name: Reject invalid input before changing resources
+        run: |
+          if ansible-playbook playbooks/network.yml -e resource_name=INVALID; then
+            echo "Invalid input was accepted"
+            exit 1
+          fi
+          test ! -f /tmp/automation-governance-lab/network/resources/INVALID.json
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Scan history for secrets
+        run: >-
+          docker run --rm -v "$PWD:/repo"
+          zricethezav/gitleaks:v8.24.2 git /repo --redact --no-banner

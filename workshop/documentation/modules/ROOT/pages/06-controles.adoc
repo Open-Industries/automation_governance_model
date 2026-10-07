@@ -1,0 +1,70 @@
+= 6. Validaciones y controles
+
+== Matriz de validaciones
+[cols="1,1,1,1",options="header"]
+|===
+|Categoría
+|Prueba
+|Criterio
+|Evidencia
+|Sintaxis
+|`ansible-playbook --syntax-check`
+|Parseo sin errores
+|Log de CI
+|Estilo
+|ansible-lint y yamllint
+|Cero hallazgos bloqueantes
+|Check del PR
+|Rol
+|Molecule converge y verify
+|Recurso y contrato correctos
+|Tests y artifacts
+|Idempotencia
+|Segunda ejecución
+|`changed=0` con mismos inputs
+|Recap y diff
+|Entradas
+|Nombre inválido o campo faltante
+|Falla antes de crear recurso
+|Job fallido controlado
+|Secrets
+|Gitleaks y revisión
+|Sin secretos en código, logs ni artifacts
+|Scan y revisión humana
+|Privilegios
+|IAM, become, network access
+|Sólo acciones y destinos necesarios
+|Matriz de permisos
+|Función
+|Lectura posterior del destino
+|Resultado coincide con inputs
+|Informe de integración
+|Negocio
+|Validación del consumidor
+|SLA y output aceptados
+|Ticket de aceptación
+|Recuperación
+|Fallo inducido
+|Estado conocido y escalamiento
+|Runbook y ensayo
+|===
+
+
+== Qué demuestra cada prueba
+La demo local valida manejo de variables, representación de estado, escritura idempotente y contrato de output. No valida capacidades, credenciales ni semántica de una API real. Check mode depende del soporte de cada módulo y no garantiza éxito posterior. Idempotencia puede requerir lecturas y normalización de valores del proveedor, además de repetir el playbook.
+
+== Validación negativa
+[source,bash]
+----
+ansible-playbook -i inventories/lab/hosts.yml playbooks/network.yml -e resource_name=INVALID
+----
+Esperar código distinto de cero y ausencia de un archivo `INVALID.json`. Probar también campos obligatorios vacíos y `governed_resource_environment` distinto de `lab`. Los controles de código son una defensa adicional a RBAC y a restringir variables de lanzamiento.
+
+== Gates humanos
+Peer review evalúa diseño, legibilidad y pruebas. Seguridad evalúa credenciales, exposición de datos, privilegios y conectividad. El dueño acepta riesgo funcional y despliegue. Change advisory confirma ventana e impacto cuando corresponde. Mantener separadas aprobación del código y autorización de ejecución.
+
+== Evidencia mínima por ejecución
+Ticket, actor o identidad de servicio, aprobación, inputs saneados, revisión SCM, EE, Job Template, job ID, resultado y URI del output. Definir retención por normativa y clasificación. La propuesta del piloto es 30 días para evidencia sintética; Seguridad debe aprobar cualquier retención de datos reales.
+
+== Salida
+Checklist completo, fallos corregidos o excepción aprobada y evidencia de las pruebas negativas.

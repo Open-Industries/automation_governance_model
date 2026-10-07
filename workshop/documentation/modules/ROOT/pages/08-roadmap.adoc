@@ -1,0 +1,90 @@
+= 8. Cierre y roadmap de 90 días
+
+== Plan de adopción
+[cols="1,1,1,1,1",options="header"]
+|===
+|Periodo
+|Acción
+|Owner
+|Entrega
+|Gate
+|Días 1–15
+|Aprobar principios, catálogo y RACI
+|Sponsor y dueños
+|Política y owners
+|Seguridad y SCM aceptan controles
+|Días 16–30
+|Preparar repos, CI, EE y RBAC lab
+|SCM y AAP Admin
+|Plataforma de piloto
+|Checks activos y accesos probados
+|Días 31–45
+|Implementar dos casos piloto acotados
+|Dev y dominios
+|Release y evidencias
+|Pruebas funcionales y recuperación
+|Días 46–60
+|Ejecutar piloto controlado y entregar output
+|Operaciones
+|Jobs y aceptación
+|Sin incidentes sin resolver
+|Días 61–75
+|Medir, corregir y extender a otros dominios
+|Dueños y SRE
+|Reporte y backlog
+|Riesgos y deuda priorizados
+|Días 76–90
+|Institucionalizar y revisar excepciones
+|Sponsor y foro
+|Modelo versión 1 y calendario
+|Owners y presupuesto confirmados
+|===
+
+
+Es un roadmap propuesto. Los nombres, fechas y metas se acuerdan al cierre y se registran en `templates/roadmap.csv`.
+
+== KPIs
+[cols="1,1,1,1",options="header"]
+|===
+|Indicador
+|Cálculo
+|Fuente
+|Cadencia
+|Cobertura de gobierno
+|Casos con owner y RACI / casos activos
+|Catálogo
+|Mensual
+|Éxito de ejecución
+|Jobs con resultado funcional válido / jobs terminados
+|Controller y aceptación
+|Semanal
+|Lead time
+|Mediana de tiempo entre caso aprobado y release
+|Tickets y Git
+|Mensual
+|Cambio fallido
+|Releases con incidente o recuperación / releases
+|ITSM
+|Mensual
+|Evidencia completa
+|Jobs con expediente completo / jobs auditados
+|Auditoría
+|Mensual
+|Ahorro neto
+|Tiempo manual base menos intervención y mantenimiento
+|Muestra de tareas
+|Mensual
+|Excepciones vencidas
+|Excepciones fuera de plazo sin cierre
+|Registro de excepciones
+|Semanal
+|===
+
+
+Registrar denominador, exclusiones y tamaño de muestra. Separar jobs cancelados, fallidos y aprobaciones vencidas. Las metas se acuerdan después de medir línea base, no se anuncian como resultados ya logrados.
+
+== Onboarding de un caso
+Completar caso y owner, clasificar riesgo, acordar RACI, diseñar recuperación, asignar repos y credenciales, validar código, probar destino, crear JT y workflow, registrar catálogo, entregar output y asignar revisión periódica.
+
+== Acuerdos de cierre
+Cada equipo nombra owner y suplente. El foro asigna fecha de primera revisión, repos del piloto y administrador de controles. El facilitador registra decisiones pendientes y una acción con owner y fecha por brecha. La aceptación del modelo corresponde a los responsables de la organización.

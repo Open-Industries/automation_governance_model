@@ -1,0 +1,18 @@
+---
+site:
+  title: Fedora Demo Platform — Gobierno de automatización
+  start_page: automation-governance::index.adoc
+content:
+  sources:
+    - url: .
+      branches: HEAD
+      start_path: workshop/documentation
+ui:
+  bundle:
+    url: https://github.com/rhpds/rhdp_showroom_theme/releases/download/v2.0.2/ui-bundle.zip
+    snapshot: false
+  supplemental_files: ./ui-supplemental
+runtime:
+  cache_dir: ./.cache/antora
+output:
+  dir: ./www

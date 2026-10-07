@@ -1,0 +1,32 @@
+---
+# Diseño para aplicar en el visualizer. Los nombres no son payloads API nativos.
+kind: WorkshopWorkflowContract
+metadata:
+  name: governance-reviewed-execution
+spec:
+  nodes:
+    - id: preflight
+      type: job-template
+      purpose: Validate ticket, target, revision and approved inputs
+      on_success: approval
+      on_failure: notify-failure
+    - id: approval
+      type: approval
+      timeout_seconds: 1800
+      approver_role: independent-domain-approver
+      on_success: execute
+      on_failure: notify-failure
+    - id: execute
+      type: job-template
+      template_reference: governance-virtualizacion-lab
+      on_success: deliver
+      on_failure: notify-failure
+    - id: deliver
+      type: job-template
+      purpose: Persist sanitized artifacts and notify authorized consumer
+    - id: notify-failure
+      type: job-template
+      purpose: Record failure and escalate without automatic destructive rollback
+  acceptance:
+    system: approved-ticket-system
+    owner: consumer

@@ -1,0 +1,146 @@
+[
+  {
+    "title": "Gobierno de automatización",
+    "subtitle": "Workshop de Ansible / AAP",
+    "lead": "Fedora Demo Platform. Open Industries.",
+    "body": "Resultado: un caso por dominio con responsables, gates y evidencia hasta la aceptación del output."
+  },
+  {
+    "title": "Resultados del workshop",
+    "subtitle": "Un expediente por equipo",
+    "lead": "Caso de uso y contrato de ejecución.",
+    "body": "RACI, playbook local, pruebas, contrato AAP, output aceptado y roadmap de 90 días."
+  },
+  {
+    "title": "1. Fundamentos y contexto",
+    "subtitle": "Gobierno de extremo a extremo",
+    "lead": "Cada automatización necesita un dueño y una decisión de aceptación.",
+    "body": "El alcance incluye diseño, ejecución, entrega, operación y retiro."
+  },
+  {
+    "title": "Riesgos y evidencia",
+    "subtitle": "Control proporcional al impacto",
+    "lead": "Privilegios mínimos reducen el alcance de un error.",
+    "body": "Versionado y revisión hacen el cambio auditable. La verificación funcional detecta resultados incompletos."
+  },
+  {
+    "title": "Modelo federado",
+    "subtitle": "Dominios con controles comunes",
+    "lead": "El dominio posee el caso y su aceptación.",
+    "body": "Seguridad, SCM y AAP mantienen controles transversales. Operaciones entrega y monitorea el resultado."
+  },
+  {
+    "title": "2. Modelo de gobierno",
+    "subtitle": "Principios operativos",
+    "lead": "Owners explícitos, seguridad desde diseño y releases trazables.",
+    "body": "Entradas y destinos limitados. Recuperación documentada antes de ejecutar."
+  },
+  {
+    "title": "Políticas de automatización",
+    "subtitle": "Un contrato por caso",
+    "lead": "Naming, tags, variables y outputs forman parte de la especificación.",
+    "body": "Secrets externos. Extra vars sólo para inputs aprobados. El playbook vuelve a validar esos inputs."
+  },
+  {
+    "title": "Riesgo y approval gates",
+    "subtitle": "Código y ejecución tienen autorizaciones distintas",
+    "lead": "Seguridad revisa todo caso nuevo.",
+    "body": "Producción crítica necesita aprobador independiente, ventana y recuperación probada."
+  },
+  {
+    "title": "3. Roles y responsabilidades",
+    "subtitle": "Ocho roles explícitos",
+    "lead": "Dueño, Dev, Seguridad, SCM, AAP Admin y dominio técnico.",
+    "body": "Operaciones ejecuta y entrega. El solicitante valida la utilidad del resultado."
+  },
+  {
+    "title": "RACI por etapa",
+    "subtitle": "Exactamente un A y al menos un R",
+    "lead": "El responsable final decide. El responsable de ejecución entrega evidencia.",
+    "body": "La matriz distingue ejecución, entrega y aceptación. Cada owner registra suplente."
+  },
+  {
+    "title": "4. Git y repositorios",
+    "subtitle": "Monorepo para el piloto",
+    "lead": "Playbooks por dominio y rol compartido de laboratorio.",
+    "body": "Separar repos cuando cambian permisos o cadencia. CODEOWNERS no limita lectura por path."
+  },
+  {
+    "title": "Branching y releases",
+    "subtitle": "Ramas cortas y main protegida",
+    "lead": "Feature por ticket, PR y release identificado por commit.",
+    "body": "Develop es opcional para integración. Producción usa una revisión conocida y EE aprobado."
+  },
+  {
+    "title": "Checks y revisiones",
+    "subtitle": "Evidencia del candidato",
+    "lead": "Syntax, lint, Molecule y scan de secrets.",
+    "body": "CODEOWNERS requiere configuración de ramas. Varios owners en un path no garantizan varias aprobaciones."
+  },
+  {
+    "title": "5. Ciclo de vida",
+    "subtitle": "Del caso al resultado aceptado",
+    "lead": "Definición, diseño, desarrollo, validación y release.",
+    "body": "AAP, pruebas, solicitud, ejecución y entrega. El consumidor acepta antes de cerrar."
+  },
+  {
+    "title": "Configuración de AAP",
+    "subtitle": "Objetos y accesos del laboratorio",
+    "lead": "Project de sólo lectura, inventory local y EE aprobado.",
+    "body": "JT por dominio, survey limitado y workflow con gate. Registrar revisión efectiva y job ID."
+  },
+  {
+    "title": "Contrato de output",
+    "subtitle": "Resultado saneado y verificable",
+    "lead": "Request ID, dominio, estado y evidencia vinculan la solicitud.",
+    "body": "Set_stats publica artifacts. Un archivo en EE es efímero y necesita persistencia externa para producción."
+  },
+  {
+    "title": "6. Validaciones y controles",
+    "subtitle": "Pruebas sobre comportamiento",
+    "lead": "Segunda ejecución sin cambios. Entradas inválidas fallan antes de escribir.",
+    "body": "La simulación local no valida APIs reales. El piloto exige integración y recuperación en destino."
+  },
+  {
+    "title": "Secrets y privilegios",
+    "subtitle": "Custodia y rotación",
+    "lead": "AAP Credentials, secret manager o Ansible Vault según necesidad.",
+    "body": "No_log y diff requieren revisión. Nunca incluir secrets en logs, artifacts ni notificaciones."
+  },
+  {
+    "title": "7. Ejercicio dinámico",
+    "subtitle": "Siete dominios y un equipo transversal",
+    "lead": "Virtualización, Network, Cloud y Plataformas.",
+    "body": "Seguridad, Infraestructura y Storage completan sus casos con el mismo modelo de evidencia."
+  },
+  {
+    "title": "Plan del ejercicio",
+    "subtitle": "180 minutos en el recorrido compacto",
+    "lead": "Selección 20, diseño y RACI 30, desarrollo 45.",
+    "body": "Pruebas 30, AAP o recorrido 25, demo y revisión 30 minutos."
+  },
+  {
+    "title": "Demostración por equipo",
+    "subtitle": "Cinco minutos con evidencia",
+    "lead": "Explicar el caso, ejecutar, repetir y mostrar output.",
+    "body": "Defender RACI, gates y recuperación ante una tarjeta de incidente."
+  },
+  {
+    "title": "8. Cierre y roadmap",
+    "subtitle": "Adopción en 90 días",
+    "lead": "Aprobar modelo, preparar plataforma y ejecutar dos pilotos.",
+    "body": "Medir resultados, extender a dominios e institucionalizar owners y calendario de revisión."
+  },
+  {
+    "title": "KPIs de gobierno",
+    "subtitle": "Línea base antes de metas",
+    "lead": "Cobertura de owners, éxito funcional y lead time.",
+    "body": "Cambio fallido, evidencia completa, ahorro neto y excepciones vencidas."
+  },
+  {
+    "title": "Acuerdos de cierre",
+    "subtitle": "Owners y siguiente revisión",
+    "lead": "Cada equipo entrega expediente y brechas con fecha.",
+    "body": "El sponsor y el foro aceptan el modelo. El piloto en controller precede a producción."
+  }
+]

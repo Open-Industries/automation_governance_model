@@ -1,0 +1,46 @@
+# 5. Ciclo de vida e implementación
+
+## Mapa de extremo a extremo
+| Etapa | Entrada | Entrega y gate |
+| --- | --- | --- |
+| Definición | Necesidad de negocio | Caso, owner y riesgo aprobado |
+| Diseño | Caso y destino | Threat model, inputs, output y recuperación |
+| Desarrollo | Diseño acordado | Playbooks, roles y pruebas |
+| Validación | Commit candidato | CI y evidencia de seguridad |
+| Revisión | PR y evidencias | Peer, owner y Seguridad según riesgo |
+| Release | PR aprobado | Commit y EE fijados |
+| AAP | Release | Project sync, inventory, credentials, JT y workflow |
+| Pruebas | Job en no producción | Prueba funcional y segunda ejecución |
+| Solicitud | Ticket, destinatario y ventana | Aprobación de ejecución |
+| Ejecución | Inputs validados | Job ID, estado y recuperación si falla |
+| Entrega | Resultado verificado | Artefacto saneado y notificación |
+| Aceptación | Output recibido | Confirmación del consumidor |
+| Operación | Historial de jobs | Métricas, revisión y retiro |
+
+## Preparación en AAP o AWX
+AAP Admin registra versión de plataforma, collections y EE del laboratorio. La guía se refiere a objetos de automation controller. AAP 2.5 puede mostrar navegación integrada diferente de AWX. Validar la compatibilidad con la versión instalada antes de usar módulos de configuración.
+
+1. Crear organización `automation-governance-lab` y equipos por dominio.
+2. Crear inventory `governance-local` con host `localhost`, `ansible_connection: local`. No mezclar destinos productivos.
+3. Crear un EE desde una imagen aprobada que incluya ansible-core. Anotar digest. Para el laboratorio no se requieren collections de proveedores.
+4. Crear Source Control Credential para leer este repositorio privado. Limitar acceso de lectura y usar rotación. No usar una cuenta personal con privilegios de escritura para sincronizar.
+5. Crear Project con URL del repo y rama de laboratorio. Sincronizar y guardar revisión efectiva. En producción fijar commit y restringir sobrescritura de SCM branch.
+6. Crear Job Template de cada dominio, tipo Run, playbook `playbooks/<dominio>.yml`, inventory local y EE aprobado. Desactivar privilege escalation, prompts de inventory, credentials y SCM branch.
+7. Crear survey para `resource_name` y `request_id`, requerido, longitud 1–63 y 1–64. El playbook valida patrones. No exponer `governed_resource_desired_state`, `governed_resource_lab_root`, `governed_resource_required_fields` ni `governed_resource_environment` a consumidores. Desactivar Prompt on launch para variables arbitrarias.
+8. Otorgar Execute sobre workflow al consumidor. El operador y AAP Admin conservan acceso directo al JT según necesidad. Revisar RBAC de Projects, inventories y credentials, además del template.
+9. Crear workflow de preparación, aprobación para los casos que la requieren, ejecución y verificación. Añadir nodos de fallo para aviso y recuperación aprobada. Las plantillas YAML en `aap/` son contratos de configuración para aplicar por UI o adaptar a la API, no payloads importables universales.
+10. Ejecutar, verificar artifacts, job log y output. Anotar job ID, revisión, inputs y resultado en la evidencia del equipo.
+
+## Solicitud y canales
+Manual, schedule, workflow, API y ServiceNow deben validar el mismo contrato. Una integración ITSM genera request_id y obtiene autorización del dueño. Reintentos reutilizan el identificador cuando representan la misma solicitud. API usa una identidad de servicio con Execute sólo sobre el workflow necesario.
+
+## Output y entrega
+`set_stats` con `per_host: false` publica el contrato como artifact para el controller. El laboratorio también escribe JSON local. En un EE, ese archivo vive en el contenedor efímero y no constituye almacenamiento persistente. En producción enviar JSON saneado a un almacén aprobado con TTL, cifrado y permisos por consumidor. El notifier comparte URI y estado, no secrets ni log completo.
+
+El contrato incluye `schema_version`, `request_id`, `use_case_id`, `domain`, `environment`, `resource_name`, `status`, `simulation`, `resource` y `evidence`. El output local dice `simulation: true`; una implementación real requiere pruebas y otro contrato que registre la referencia y revisión del destino. El wrapper o integración puede añadir job ID, commit y timestamps del controller.
+
+## Recuperación y aceptación
+En el laboratorio la repetición es idempotente y conserva el estado. La recuperación consiste en restaurar únicamente el archivo del recurso de laboratorio tras revisar su contenido. Para proveedores reales, documentar compensación, límites de recuperación, verificación y escalamiento. Un resultado técnico `successful` no implica aceptación de negocio.
+
+## Salida
+Mapa con owners, contrato de ejecución, plantilla AAP y evidencia de una solicitud completada.

@@ -1,0 +1,10 @@
+---
+- name: Crear volumen y mapping in the governed local laboratory
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../examples/storage.yml
+  roles:
+    - role: governed_resource
+      governed_resource_resource_name: '{{ resource_name | default(''demo-resource'') }}'
+      governed_resource_request_id: '{{ request_id | default(''workshop-001'') }}'

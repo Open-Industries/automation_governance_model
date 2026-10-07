@@ -1,0 +1,6 @@
+---
+name: automation-governance
+version: main
+title: Gobierno de automatización
+nav:
+  - modules/ROOT/nav.adoc

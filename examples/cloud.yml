@@ -1,0 +1,20 @@
+---
+governed_resource_domain: cloud
+governed_resource_use_case_id: UC-CLD-001
+governed_resource_required_fields:
+  - image
+  - flavor
+  - security_group
+  - backup_policy
+governed_resource_desired_state:
+  image: fedora-lab-image
+  flavor: small
+  security_group: restricted-egress
+  backup_policy: daily
+  tags:
+    owner: workshop-team
+    domain: cloud
+    environment: lab
+    cost_center: training
+    use_case_id: UC-CLD-001
+    data_classification: synthetic

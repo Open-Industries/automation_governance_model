@@ -1,0 +1,12 @@
+---
+- name: Verify all workshop domain outputs
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Validate stored output contracts and resource state
+      ansible.builtin.command:
+        argv:
+          - "{{ ansible_playbook_python }}"
+          - "{{ lookup('ansible.builtin.env', 'MOLECULE_PROJECT_DIRECTORY') }}/scripts/check_lab_outputs.py"
+          - --all
+      changed_when: false

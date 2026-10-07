@@ -1,0 +1,54 @@
+[
+  {
+    "slug": "00-inicio",
+    "title": "Inicio y preparación"
+  },
+  {
+    "slug": "01-fundamentos",
+    "title": "1. Fundamentos y contexto"
+  },
+  {
+    "slug": "02-modelo",
+    "title": "2. Modelo de gobierno"
+  },
+  {
+    "slug": "03-roles-raci",
+    "title": "3. Roles y RACI"
+  },
+  {
+    "slug": "04-git",
+    "title": "4. Git y repositorios"
+  },
+  {
+    "slug": "05-ciclo-vida",
+    "title": "5. Ciclo de vida y AAP"
+  },
+  {
+    "slug": "06-controles",
+    "title": "6. Validaciones y controles"
+  },
+  {
+    "slug": "07-ejercicio",
+    "title": "7. Ejercicio por dominios"
+  },
+  {
+    "slug": "08-roadmap",
+    "title": "8. Cierre y roadmap"
+  },
+  {
+    "slug": "09-secrets",
+    "title": "Guía de secrets"
+  },
+  {
+    "slug": "10-facilitacion",
+    "title": "Guía del facilitador y agenda"
+  },
+  {
+    "slug": "11-publicacion",
+    "title": "Publicación y operación del portal"
+  },
+  {
+    "slug": "12-referencias",
+    "title": "Referencias técnicas"
+  }
+]

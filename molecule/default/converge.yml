@@ -1,0 +1,15 @@
+---
+- name: Converge virtualizacion
+  ansible.builtin.import_playbook: ../../playbooks/virtualizacion.yml
+- name: Converge network
+  ansible.builtin.import_playbook: ../../playbooks/network.yml
+- name: Converge cloud
+  ansible.builtin.import_playbook: ../../playbooks/cloud.yml
+- name: Converge plataformas
+  ansible.builtin.import_playbook: ../../playbooks/plataformas.yml
+- name: Converge seguridad
+  ansible.builtin.import_playbook: ../../playbooks/seguridad.yml
+- name: Converge infraestructura
+  ansible.builtin.import_playbook: ../../playbooks/infraestructura.yml
+- name: Converge storage
+  ansible.builtin.import_playbook: ../../playbooks/storage.yml

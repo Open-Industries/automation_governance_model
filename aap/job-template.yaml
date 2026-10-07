@@ -1,0 +1,41 @@
+---
+# Contrato para configurar por UI. No es un payload de importación del controller.
+kind: WorkshopJobTemplateContract
+metadata:
+  name: governance-virtualizacion-lab
+  owner: workshop-virtualizacion
+spec:
+  organization: automation-governance-lab
+  project:
+    name: automation-governance
+    scm_url: https://github.com/Open-Industries/automation_governance_model.git
+    scm_revision: REPLACE_WITH_REVIEWED_COMMIT
+    credential_reference: scm-readonly
+  inventory: governance-local
+  playbook: playbooks/virtualizacion.yml
+  execution_environment: REPLACE_WITH_APPROVED_EE_DIGEST
+  job_type: run
+  become_enabled: false
+  timeout_seconds: 300
+  prompt_inventory: false
+  prompt_credentials: false
+  prompt_scm_branch: false
+  prompt_extra_vars: false
+  survey:
+    enabled: true
+    fields:
+      - variable: resource_name
+        type: text
+        required: true
+        min_length: 1
+        max_length: 63
+      - variable: request_id
+        type: text
+        required: true
+        min_length: 1
+        max_length: 64
+  credential_references: []
+  rbac:
+    consumers: workflow-execute-only
+    operators: approved-template-execute
+  output_contract: templates/output-contract.json

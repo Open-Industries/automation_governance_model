@@ -1,0 +1,5 @@
+:root {--navbar-background:#111827;--link-font-color:#2459a6;--link_hover-font-color:#153a70;--important-color:#2459a6;--heading-font-family:Arial,sans-serif;--body-font-family:Arial,sans-serif;--navbar-font-family:Arial,sans-serif;--monospace-font-family:Consolas,monospace}
+.navbar-brand .site-title {font-weight:700}
+.doc h1 {border-bottom:3px solid #2459a6;padding-bottom:1rem}
+.doc .listingblock pre {border-left:3px solid #2459a6}
+.footer {border-top:1px solid #c7c7c7}

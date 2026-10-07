@@ -1,0 +1,18 @@
+---
+governed_resource_domain: storage
+governed_resource_use_case_id: UC-STO-001
+governed_resource_required_fields:
+  - size_gib
+  - snapshot_policy
+  - host_group
+governed_resource_desired_state:
+  size_gib: 20
+  snapshot_policy: daily
+  host_group: lab-hosts
+  tags:
+    owner: workshop-team
+    domain: storage
+    environment: lab
+    cost_center: training
+    use_case_id: UC-STO-001
+    data_classification: synthetic

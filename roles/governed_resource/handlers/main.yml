@@ -1,0 +1,4 @@
+---
+- name: Record reconciled resource
+  ansible.builtin.debug:
+    msg: Synthetic resource reconciled for {{ governed_resource_domain }} / {{ governed_resource_resource_name }}

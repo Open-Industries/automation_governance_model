@@ -1,0 +1,14 @@
+# Sustituir por equipos existentes con write antes de copiar a CODEOWNERS.
+* @Open-Industries/automation-scm
+/playbooks/virtualizacion.yml @Open-Industries/automation-virtualizacion
+/playbooks/network.yml @Open-Industries/automation-network
+/playbooks/cloud.yml @Open-Industries/automation-cloud
+/playbooks/plataformas.yml @Open-Industries/automation-plataformas
+/playbooks/seguridad.yml @Open-Industries/automation-seguridad
+/playbooks/infraestructura.yml @Open-Industries/automation-infraestructura
+/playbooks/storage.yml @Open-Industries/automation-storage
+/roles/ @Open-Industries/automation-developers @Open-Industries/automation-security
+/examples/ @Open-Industries/automation-developers
+/inventories/ @Open-Industries/automation-platform
+/aap/ @Open-Industries/automation-platform @Open-Industries/automation-security
+/.github/ @Open-Industries/automation-scm

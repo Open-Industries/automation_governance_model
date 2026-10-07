@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "request_id": "workshop-001",
+  "use_case_id": "UC-VIRT-001",
+  "domain": "virtualizacion",
+  "environment": "lab",
+  "resource_name": "demo-resource",
+  "status": "verified",
+  "simulation": true,
+  "resource": {
+    "template": "fedora-lab-template",
+    "tags": {
+      "owner": "workshop-team",
+      "domain": "virtualizacion",
+      "environment": "lab",
+      "cost_center": "training",
+      "use_case_id": "UC-VIRT-001",
+      "data_classification": "synthetic"
+    }
+  },
+  "evidence": {
+    "kind": "local-simulation",
+    "resource_path": "/tmp/automation-governance-lab/virtualizacion/resources/demo-resource.json"
+  }
+}

@@ -1,0 +1,5 @@
+---
+governed_resource_lab_root: /tmp/automation-governance-lab
+governed_resource_environment: lab
+governed_resource_resource_name: demo-resource
+governed_resource_request_id: workshop-001

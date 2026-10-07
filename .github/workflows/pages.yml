@@ -1,0 +1,49 @@
+---
+name: Publish workshop
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/build_site.py
+      - name: Install Antora
+        run: npm install --no-save @antora/cli@3.1.10 @antora/site-generator@3.1.10
+      - name: Build Showroom documentation
+        run: npx antora --fetch default-site.yml
+      - name: Include presentation and exercise downloads
+        run: |
+          cp -r public/slides www/slides
+          cp -r public/downloads www/downloads
+          touch www/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: www
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment

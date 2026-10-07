@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+public/
+www/
+.cache/
+artifacts/
+node_modules/
+*.retry
+.env

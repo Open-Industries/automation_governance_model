@@ -1,0 +1,29 @@
+# Publicación del portal
+
+## Arquitectura de documentación
+`docs/*.md` es el contenido canónico. `scripts/build_site.py` genera un portal local estático y fuentes AsciiDoc de Antora a partir del mismo contenido. `default-site.yml` usa el tema Showroom v2.0.2 de la página de referencia. `ui-supplemental/` reemplaza cabecera y footer por Fedora y carga la imagen original sin editarla.
+
+`workshop/documentation/` contiene componente Antora `automation-governance`, versión `main`. La ruta publicada del inicio es `automation-governance/main/index.html`. El workflow copia presentación y recursos descargables al output Antora.
+
+## GitHub Pages
+1. Un administrador abre Settings, Pages y selecciona GitHub Actions como source.
+2. Verifica disponibilidad de Pages para el plan y visibilidad del repositorio privado.
+3. Configura environment `github-pages` según política de publicación.
+4. Ejecuta el workflow `Publish workshop` o hace push a main.
+5. Consulta la URL efectiva en el deployment exitoso. No asumir que la URL prevista ya está activa.
+
+El contenido que se publica en Pages puede ser accesible públicamente aun cuando el repositorio sea privado, según configuración y plan. La documentación usa únicamente datos sintéticos. El conector usado para preparar el repo no modifica Pages ni rulesets. No es necesario hacer público el repositorio para preparar este workshop.
+
+## Demo Platform / Showroom
+El playbook Antora y el componente son reutilizables en una instancia de Showroom. Registrar el repo, la rama y `workshop/documentation` como fuente de contenido en la configuración de esa instancia. La imagen y los partials pertenecen al supplemental UI y requieren que el servicio use `default-site.yml` o su configuración equivalente. La provisión de AAP y cuentas de laboratorio es independiente del portal.
+
+## Validación local
+```bash
+python scripts/build_site.py
+python scripts/validate_content.py
+python -m http.server 8000 --directory public
+```
+No requiere red para construir la vista local. La construcción Antora requiere descargar su CLI y el bundle UI en CI. Se recomienda cache controlado o mirror para entornos desconectados.
+
+## Mantenimiento
+Editar Markdown, regenerar documentación, revisar links y abrir PR. Al actualizar tema o dependencias, probar navegación, móvil, tablas, código, presentación y marca Fedora. Los checks locales no sustituyen un deployment exitoso.

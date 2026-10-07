@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  author: Open Industries
+  description: Governed local resource simulation for an automation workshop
+  license: MIT
+  min_ansible_version: '2.17'
+  platforms:
+    - name: EL
+      versions:
+        - '9'
+dependencies: []

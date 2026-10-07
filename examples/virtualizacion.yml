@@ -1,0 +1,22 @@
+---
+governed_resource_domain: virtualizacion
+governed_resource_use_case_id: UC-VIRT-001
+governed_resource_required_fields:
+  - template
+  - network
+  - datastore
+  - cpu
+  - memory_mb
+governed_resource_desired_state:
+  template: fedora-lab-template
+  network: lab-net
+  datastore: lab-storage
+  cpu: 2
+  memory_mb: 2048
+  tags:
+    owner: workshop-team
+    domain: virtualizacion
+    environment: lab
+    cost_center: training
+    use_case_id: UC-VIRT-001
+    data_classification: synthetic

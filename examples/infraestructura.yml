@@ -1,0 +1,18 @@
+---
+governed_resource_domain: infraestructura
+governed_resource_use_case_id: UC-INF-001
+governed_resource_required_fields:
+  - os_image
+  - cmdb_class
+  - monitoring_profile
+governed_resource_desired_state:
+  os_image: fedora-lab
+  cmdb_class: lab-server
+  monitoring_profile: base
+  tags:
+    owner: workshop-team
+    domain: infraestructura
+    environment: lab
+    cost_center: training
+    use_case_id: UC-INF-001
+    data_classification: synthetic

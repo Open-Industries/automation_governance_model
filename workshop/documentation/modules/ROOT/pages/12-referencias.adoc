@@ -1,0 +1,16 @@
+= Referencias técnicas
+
+Estas fuentes sustentan las funciones de plataforma y herramientas. Las reglas de gobierno, agenda y metas del piloto son propuestas del workshop que la organización debe aprobar.
+
+* https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/using_automation_execution/index[AAP 2.5: Using automation execution]: proyectos, surveys, RBAC y artifacts.
+* https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_execution/controller-workflow-job-templates[AAP 2.5: Workflow job templates]: aprobación y nodos.
+* https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/set_stats_module.html[Ansible set_stats]: contrato de artifacts y ámbito por host.
+* https://docs.ansible.com/projects/molecule/workflow/[Molecule workflow]: converge, idempotence y verify.
+* https://docs.ansible.com/projects/molecule/configuration/[Molecule configuration]: configuración de escenarios.
+* https://docs.ansible.com/projects/ansible/latest/vault_guide/index.html[Ansible Vault]: protección de variables cifradas.
+* https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners[GitHub CODEOWNERS]: limitaciones y requisitos de owners.
+* https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site[GitHub Pages publishing source]: configuración del despliegue.
+* https://github.com/rhpds/rhdp_showroom_theme[Tema Showroom]: bundle de Demo Platform utilizado como referencia visual.
+* https://psehgaft.github.io/ocp-ansible-agent-installer/ocp-redfish-installer/main/index.html[Workshop de referencia]: identidad visual original que se adapta a Fedora.
+
+Revisado para preparar el workshop el 7 de octubre de 2026. La versión instalada del controller y sus módulos debe confirmarse durante preparación.

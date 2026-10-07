@@ -1,0 +1,75 @@
+= 2. Modelo de gobierno
+
+== Principios y reglas aplicables
+[cols="1,1,1",options="header"]
+|===
+|Principio
+|Regla
+|Owner del control
+|Seguridad por defecto
+|Privilegios, destino y entradas limitados desde diseño
+|Seguridad
+|Ownership claro
+|Cada caso registra owner de negocio, técnico y operador
+|Dueño de dominio
+|Versionado
+|Release enlaza commit, EE por digest y dependencias
+|SCM
+|Trazabilidad
+|Ticket, aprobaciones, job ID y output comparten request_id
+|Operaciones
+|Separación de funciones
+|El autor no aprueba su propio cambio de riesgo alto
+|Dueño y Seguridad
+|Reversibilidad
+|Definir compensación, recuperación y límites antes de ejecutar
+|Dev y dominio
+|===
+
+
+== Políticas mínimas
+* Identificador de caso: `UC-<DOMINIO>-<NUMERO>`, por ejemplo `UC-NET-001`.
+* Recursos: minúsculas, números y guiones, con entorno, servicio y función cuando corresponda. El límite de longitud depende del proveedor.
+* Tags obligatorios: `owner`, `domain`, `environment`, `cost_center`, `use_case_id`, `data_classification`.
+* `defaults` para valores reemplazables del rol. `group_vars` para entorno o grupo. `host_vars` para excepciones por host. `extra_vars` únicamente para entradas aprobadas. Su precedencia puede sobreescribir controles: validar dentro del playbook y restringir Prompt on launch.
+* Secrets mediante AAP Credentials, secret manager o Ansible Vault. Nunca en surveys de texto libre, inventarios planos ni artefactos.
+* Límites de destino: inventory separado, limit permitido y credencial por entorno. El mismo nombre de Job Template no demuestra aislamiento.
+* Cada release conserva contrato de output, evidencia de pruebas, revisión de seguridad y runbook.
+
+== Clasificación de riesgo
+[cols="1,1,1",options="header"]
+|===
+|Nivel
+|Criterio
+|Gate
+|Bajo
+|Consulta sin datos sensibles o demo local
+|Peer review y revisión de seguridad inicial
+|Medio
+|Cambio reversible en un servicio acotado
+|Owner de dominio y Seguridad revisan impacto
+|Alto
+|Producción crítica, identidad, red, destrucción o datos sensibles
+|Aprobador independiente, change record y plan de recuperación probado
+|===
+
+
+Seguridad revisa privilegios, secrets y hardening de todo caso nuevo. En releases posteriores define si los controles automáticos y la evidencia previa bastan o si requiere revisión humana. Registrar esa decisión. Un job puede requerir autorización de ejecución aunque el código ya tenga aprobación.
+
+== Gates por etapa
+. Entrada: objetivo, prioridad, owner, alcance y riesgo aceptados.
+. Diseño: contratos, threat model y recuperación revisados.
+. Código: checks y revisiones del PR completos.
+. Release: commit conocido y dependencias congeladas.
+. Promoción: pruebas no productivas y aceptación de negocio.
+. Ejecución: ticket, ventana, destinatario y aprobación según riesgo.
+. Cierre: resultado validado, output entregado y aceptación registrada.
+
+== Excepciones y emergencias
+Una excepción contiene política afectada, justificación, controles compensatorios, aprobador y caducidad. Una urgencia permite un flujo abreviado aprobado por el responsable de incidente, con evidencia posterior y revisión en el siguiente día hábil. No convierte una credencial compartida permanente en un control aceptable. Los accesos de emergencia caducan y se auditan.
+
+== Catálogo y revisión
+El catálogo lista dominio, repositorio, release, Job Template, owner, riesgo, última ejecución, última revisión y fecha de retiro. Revisar trimestralmente permisos, credenciales, dependencias y casos sin consumo. Retirar schedules, templates y accesos antes de archivar código.
+
+== Actividad y salida
+Clasificar el caso del equipo y registrar sus gates. El owner y Seguridad validan la clasificación y el tiempo de revisión.

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+{{> head defaultPageTitle='Sin título'}}
+  </head>
+  <body class="article{{#with (or page.attributes.role page.role)}} {{{this}}}{{/with}}">
+<a class="skip-link" href="#content">Saltar al contenido</a>
+{{> header}}
+{{> body}}
+{{> footer}}
+  </body>
+</html>

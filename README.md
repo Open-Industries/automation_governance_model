@@ -41,4 +41,4 @@ python scripts/validate_raci.py templates/raci-editable.csv
 CI valida contenido, lint, Molecule y secrets. Las reglas de protección y equipos de CODEOWNERS se configuran en GitHub; no quedan activados por este README.
 
 ## Alcance
-Agenda compacta de ocho horas con preparación previa y versión ampliada de 10–12 horas más pausas. Fedora identifica la marca de este workshop comunitario. Los nombres técnicos de AAP y los enlaces a documentación oficial se conservan.
+Agenda compacta de ocho horas con preparación previa y versión ampliada de 9 h 15 min–11 h 15 min más pausas. Fedora identifica la marca de este workshop comunitario. Los nombres técnicos de AAP y los enlaces a documentación oficial se conservan.

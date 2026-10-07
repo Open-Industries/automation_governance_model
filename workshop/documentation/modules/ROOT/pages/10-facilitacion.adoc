@@ -39,10 +39,10 @@
 |===
 
 
-Total: 425 minutos de contenido y 55 de pausas. Para dos medios días, terminar el primero a los 240 minutos e iniciar el segundo con 30 minutos de recap y ajuste del ejercicio, reduciendo proporcionalmente tiempos según el grupo. Preparar el laboratorio antes de la sesión.
+Total: 425 minutos de contenido y 55 de pausas. Para dos medios días: día 1, 215 minutos de los bloques 1–6, 10 de pausa y 15 de briefing del ejercicio. Día 2, 15 de recap, 180 de ejercicio, 15 de pausa y 30 de cierre. Cada medio día suma exactamente 240 minutos. Preparar el laboratorio antes de la sesión.
 
 == Agenda ampliada
-Fundamentos 45–60, gobierno 60–75, RACI 60, Git 75–90, ciclo 60, controles 45, ejercicio 180–240 y cierre 30–45 minutos. Total 615–730 minutos más pausas. Programar dos jornadas de aproximadamente seis a siete horas o una agenda equivalente.
+Fundamentos 45–60, gobierno 60–75, RACI 60, Git 75–90, ciclo 60, controles 45, ejercicio 180–240 y cierre 30–45 minutos. Total 555–675 minutos más pausas. Programar dos jornadas de aproximadamente seis a siete horas o una agenda equivalente.
 
 == Preparación y evaluación
 Dos semanas antes, solicitar casos por dominio y confirmar plataforma. Una semana antes, validar roles de acceso y ejecutar CI. El día previo, comprobar clonación privada, EE, Project sync y salida del ejemplo. Distribuir plantillas y board sin datos reales.

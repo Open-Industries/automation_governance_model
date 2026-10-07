@@ -17,13 +17,13 @@ Cada equipo entrega un caso de uso versionado, un RACI firmado, un playbook de l
 |Lectura previa de fundamentos, Git y roles
 |Un caso por equipo con revisión cruzada
 |Ampliado
-|10–12 horas más pausas
+|9 h 15 min–11 h 15 min más pausas
 |Laboratorio operativo
 |Discusión completa y extensión a un proveedor real
 |===
 
 
-Las duraciones originales suman 10 h 15 min a 12 h 10 min de contenido. Dos medios días de cuatro horas corresponden al recorrido compacto, no al ampliado.
+Las duraciones originales suman 9 h 15 min a 11 h 15 min de contenido. Dos medios días de cuatro horas corresponden al recorrido compacto, no al ampliado.
 
 == Antes de la sesión
 . El facilitador asigna un equipo por dominio y un equipo transversal de Seguridad, SCM y AAP. Una misma persona puede cubrir varios roles en organizaciones pequeñas, documentando los conflictos de interés.

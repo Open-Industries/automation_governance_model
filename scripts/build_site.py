@@ -126,9 +126,9 @@ def adoc_inline(line):
 
 
 def copy_downloads(target):
-    for name in ['templates', 'aap', 'examples', 'playbooks', 'inventories', 'roles', 'scripts', 'molecule']:
+    for name in ['templates', 'aap', 'examples', 'playbooks', 'inventories', 'roles', 'scripts', 'molecule', 'docs', 'slides', 'web', 'ui-supplemental', 'workshop', '.github']:
         shutil.copytree(ROOT / name, target / name, dirs_exist_ok=True, ignore=shutil.ignore_patterns('__pycache__'))
-    for name in ['requirements-dev.txt', 'ansible.cfg', '.ansible-lint', '.yamllint']:
+    for name in ['index.html', 'README.md', 'LICENSE', 'requirements-dev.txt', 'ansible.cfg', 'default-site.yml', '.gitignore', '.ansible-lint', '.yamllint']:
         shutil.copyfile(ROOT / name, target / name)
 
 

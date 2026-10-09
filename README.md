@@ -8,7 +8,8 @@ Workshop comunitario de Open Industries para institucionalizar el gobierno de An
 - [Inicio y preparación](docs/00-inicio.md)
 - [Modelo de gobierno](docs/02-modelo.md) y [RACI global](docs/03-roles-raci.md)
 - [Git y releases](docs/04-git.md), [AAP y ciclo de vida](docs/05-ciclo-vida.md)
-- [Ejercicio por dominios](docs/07-ejercicio.md) y [roadmap](docs/08-roadmap.md)
+- [Ejercicio por dominios](docs/07-ejercicio.md): plan de acción, comité y siete guiones detallados con responsables y pruebas ejecutables.
+- [Roadmap](docs/08-roadmap.md)
 - [Agenda y facilitación](docs/10-facilitacion.md)
 - [Secrets](docs/09-secrets.md) y [publicación](docs/11-publicacion.md)
 - [Presentación navegable e imprimible](slides/index.html)
@@ -32,6 +33,12 @@ python scripts/validate_content.py
 python -m http.server 8000 --directory public
 ```
 Abrir localhost:8000. Para publicar, el workflow Antora usa el tema Showroom con marca Open Demo Platform. El administrador debe habilitar Pages como GitHub Actions. La URL sólo queda activa después de un deployment exitoso. Consultar `docs/11-publicacion.md`.
+
+## Prueba guiada de un caso
+```bash
+python scripts/run_guided_lab.py --domain virtualizacion --request-id AUTO-VIRT-001 --resource-name vm-lab-001
+```
+El runner conserva evidencia de baseline, repetición, rechazo de input inválido y cambio controlado. Sólo simula estado local; integración real y AAP tienen gates y evidencias separados.
 
 ## Verificación
 ```bash

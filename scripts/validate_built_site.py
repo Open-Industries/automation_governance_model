@@ -31,4 +31,9 @@ for page in pages:
     if 'automation-governance/main/' in str(page):
         assert '<html lang="es">' in source
         assert 'Open Demo Platform' in source and 'open-demo-platform.png' in source
+        assert source.count('aria-label="Navegación del workshop"') == 2, f'Missing top/bottom navigation: {page}'
+        if page.name == '07-ejercicio.html':
+            assert '07-virtualizacion.html' in source and '06-controles.html' in source
+        if page.name == '07-storage.html':
+            assert '08-roadmap.html' in source
 print(f'Validated {len(pages)} built HTML pages and Open Demo Platform branding')

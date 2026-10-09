@@ -3,3 +3,11 @@
 .doc h1 {border-bottom:3px solid #2459a6;padding-bottom:1rem}
 .doc .listingblock pre {border-left:3px solid #2459a6}
 .footer {border-top:1px solid #c7c7c7}
+
+.workshop-pagination{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin:24px 0;padding:16px 0;border-top:1px solid #d9dde3;border-bottom:1px solid #d9dde3}
+.workshop-pagination .step-button{display:block;flex:1 1 200px;max-width:48%;padding:12px 16px;border:1px solid #2459a6;border-radius:6px;background:#2459a6;color:#fff!important;font-size:14px;line-height:1.5;text-decoration:none!important}
+.workshop-pagination .step-button[rel=next]{margin-left:auto;text-align:right}
+.workshop-pagination .step-button:hover{background:#153a70}
+.workshop-pagination .step-button:focus-visible{outline:3px solid #65a4ff;outline-offset:3px}
+@media(max-width:600px){.workshop-pagination .step-button{max-width:none;flex-basis:100%;text-align:left!important}}
+@media print{.workshop-pagination{display:none}}

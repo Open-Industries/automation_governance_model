@@ -1,5 +1,9 @@
 = 6. Validaciones y controles
 
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="05-ciclo-vida.html">Anterior: 5. Ciclo de vida y AAP</a><a class="step-button" rel="next" href="07-ejercicio.html">Siguiente: 7. Ejercicio por dominios</a></nav>
+++++
+
 == Matriz de validaciones
 [cols="1,1,1,1",options="header"]
 |===
@@ -68,3 +72,7 @@ Ticket, actor o identidad de servicio, aprobación, inputs saneados, revisión S
 
 == Salida
 Checklist completo, fallos corregidos o excepción aprobada y evidencia de las pruebas negativas.
+
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="05-ciclo-vida.html">Anterior: 5. Ciclo de vida y AAP</a><a class="step-button" rel="next" href="07-ejercicio.html">Siguiente: 7. Ejercicio por dominios</a></nav>
+++++

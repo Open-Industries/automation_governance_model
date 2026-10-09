@@ -122,7 +122,12 @@ def to_adoc(text):
 
 def adoc_inline(line):
     line = re.sub(r'\*\*([^*]+)\*\*', r'*\1*', line)
-    return re.sub(r'\[([^]]+)\]\((https?://[^)]+)\)', r'\2[\1]', line)
+    line = re.sub(r'\[([^]]+)\]\((https?://[^)]+)\)', r'\2[\1]', line)
+    def local_link(match):
+        label, target = match.groups()
+        name = 'index' if Path(target).stem == NAV[0]['slug'] else Path(target).stem
+        return f'xref:{name}.adoc[{label}]'
+    return re.sub(r'\[([^]]+)\]\(([^):]+\.md)\)', local_link, line)
 
 
 def copy_downloads(target):
@@ -130,6 +135,20 @@ def copy_downloads(target):
         shutil.copytree(ROOT / name, target / name, dirs_exist_ok=True, ignore=shutil.ignore_patterns('__pycache__'))
     for name in ['index.html', 'README.md', 'LICENSE', 'requirements-dev.txt', 'ansible.cfg', 'default-site.yml', '.gitignore', '.ansible-lint', '.yamllint']:
         shutil.copyfile(ROOT / name, target / name)
+
+
+
+def step_navigation(index, native=False):
+    items = []
+    for offset, label, rel in [(-1, 'Anterior', 'prev'), (1, 'Siguiente', 'next')]:
+        target_index = index + offset
+        if not 0 <= target_index < len(NAV):
+            continue
+        item = NAV[target_index]
+        slug = 'index' if native and target_index == 0 else item['slug']
+        title = html.escape(item['title'])
+        items.append(f'<a class="step-button" rel="{rel}" href="{slug}.html">{label}: {title}</a>')
+    return '<nav class="workshop-pagination" aria-label="Navegación del workshop">' + ''.join(items) + '</nav>'
 
 
 def main():
@@ -167,12 +186,16 @@ def main():
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{html.escape(title)} — Open Demo Platform</title><link rel="stylesheet" href="assets/style.css"><script src="assets/app.js" defer></script></head><body>
 <a class="skip" href="#content">Saltar al contenido</a><header><button id="menu-toggle" aria-expanded="false" aria-controls="sidebar">Menú</button><a class="brand" href="index.html"><img src="assets/open-demo-platform.png" alt="Logo de Open Demo Platform"><span>Open <small>Demo Platform</small></span></a><span class="header-title">Modelos de gobierno de automatización</span><a href="slides/index.html">Presentación</a><a href="https://github.com/Open-Industries/automation_governance_model">GitHub</a></header>
 <nav id="sidebar" aria-label="Workshop"><p class="nav-title">GOBIERNO DE AUTOMATIZACIÓN</p><p class="version">Versión main · Español</p><label for="nav-search">Buscar sección</label><input id="nav-search" type="search" placeholder="Filtrar navegación">{sidebar}<a href="downloads/workshop-lab.zip">Kit descargable</a></nav>
-<div class="workspace"><div class="toolbar">Open Demo Platform / Workshop / {html.escape(title)}</div><div class="content-layout"><main id="content">{hero}{body}{downloads}<nav class="pagination" aria-label="Entre secciones">{prev}{nxt}</nav></main><aside aria-label="En esta página"><p>EN ESTA PÁGINA</p>{toc_html}</aside></div><footer>Open Demo Platform · Open Industries<br><small>Workshop comunitario. Datos sintéticos de laboratorio.</small></footer></div></body></html>"""
+<div class="workspace"><div class="toolbar">Open Demo Platform / Workshop / {html.escape(title)}</div><div class="content-layout"><main id="content">{step_navigation(index)}{hero}{body}{downloads}{step_navigation(index)}</main><aside aria-label="En esta página"><p>EN ESTA PÁGINA</p>{toc_html}</aside></div><footer>Open Demo Platform · Open Industries<br><small>Workshop comunitario. Datos sintéticos de laboratorio.</small></footer></div></body></html>"""
         (PUBLIC / (slug + '.html')).write_text(page)
         adoc_name = 'index' if index == 0 else slug
         adoc = to_adoc(text)
+        pager = '\n++++\n' + step_navigation(index, native=True) + '\n++++\n'
+        heading, rest = adoc.split('\n', 1)
+        adoc = heading + '\n' + pager + rest
         if index == 0:
             adoc += '\n== Material editable\n\nlink:../../downloads/workshop-lab.zip[Descargar kit de laboratorio]\n\nlink:../../slides/index.html[Presentación navegable]\n'
+        adoc += pager
         (pages / (adoc_name + '.adoc')).write_text(adoc)
         nav_adoc.append(f'* xref:{adoc_name}.adoc[{title}]')
     (PUBLIC / 'index.html').write_text((PUBLIC / (NAV[0]['slug'] + '.html')).read_text())

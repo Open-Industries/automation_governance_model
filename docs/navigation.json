@@ -32,6 +32,34 @@
     "title": "7. Ejercicio por dominios"
   },
   {
+    "slug": "07-virtualizacion",
+    "title": "Caso 1. VM estándar"
+  },
+  {
+    "slug": "07-network",
+    "title": "Caso 2. VLAN, ACL y switchport"
+  },
+  {
+    "slug": "07-cloud",
+    "title": "Caso 3. Instancia gobernada"
+  },
+  {
+    "slug": "07-plataformas",
+    "title": "Caso 4. Aplicación con health check y recuperación"
+  },
+  {
+    "slug": "07-seguridad",
+    "title": "Caso 5. Hardening, certificados y compliance"
+  },
+  {
+    "slug": "07-infraestructura",
+    "title": "Caso 6. Host, CMDB y monitoreo"
+  },
+  {
+    "slug": "07-storage",
+    "title": "Caso 7. Volumen, snapshots y mapping"
+  },
+  {
     "slug": "08-roadmap",
     "title": "8. Cierre y roadmap"
   },

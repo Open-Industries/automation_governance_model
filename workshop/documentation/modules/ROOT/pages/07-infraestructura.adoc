@@ -1,0 +1,254 @@
+= Caso 6. Host, CMDB y monitoreo: guion de infraestructura
+
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="07-seguridad.html">Anterior: Caso 5. Hardening, certificados y compliance</a><a class="step-button" rel="next" href="07-storage.html">Siguiente: Caso 7. Volumen, snapshots y mapping</a></nav>
+++++
+
+== Misión y criterio de aceptación
+*Solicitud recibida:* El consumidor solicita un host de laboratorio con imagen fedora-lab, clase CMDB lab-server y monitoreo base.
+
+*Ticket:* `AUTO-INF-001`. *Caso:* `UC-INF-001`. *Recurso de laboratorio:* `host-lab-001`.
+
+*Aceptación en el piloto real:* Un host con identidad única, red y DNS correctos, registro CMDB vinculado al owner y agente que reporta métricas con evidencia de alerta.
+
+El laboratorio crea únicamente un archivo JSON y un output sintético en localhost. Sigue primero los doce pasos; en el paso 7 ejecuta el bloque de comandos. Los pasos de proveedor y AAP requieren entornos autorizados y evidencias propias. Consultar xref:07-ejercicio.adoc[el proceso completo y los gates del comité] para resolver una devolución o cambio de alcance.
+
+== Preparar el expediente del caso
+Desde la raíz de un checkout limpio del repositorio, ejecutar:
+
+[source,bash]
+----
+git switch main
+git pull --ff-only
+git switch -c feature/auto-inf-001-infraestructura
+mkdir -p teams/infraestructura/AUTO-INF-001
+cp templates/use-case.md teams/infraestructura/AUTO-INF-001/use-case.md
+cp templates/raci-editable.csv teams/infraestructura/AUTO-INF-001/raci.csv
+cp templates/threat-model.md teams/infraestructura/AUTO-INF-001/threat-model.md
+cp templates/execution-evidence.md teams/infraestructura/AUTO-INF-001/execution-evidence.md
+----
+
+Si la rama o expediente ya existe, continuar con su owner; no sobrescribir trabajo de otro equipo. Completar plantillas, crear `acta-comite.md` y asignar una persona a cada rol antes de desarrollar. Registrar decisiones en el ticket además de Git. Los comandos de laboratorio no abren tickets, no convocan el comité y no crean objetos de AAP automáticamente.
+
+== Paso 1. Recibir y completar la solicitud
+*Quién actúa:* Solicitante y Dueño.
+
+. Solicitante declara capacidad, OS, hostname, red, ubicación, owner y propósito. Dueño Infraestructura confirma quién será propietario en CMDB y quién consume monitoreo.
+. Registrar en el expediente qué se observó, quién decidió y la evidencia. El siguiente responsable confirma recepción antes de continuar.
+. Si falta la precondición o hay una desviación respecto del alcance, dejar el caso bloqueado, asignar responsable/fecha y volver al gate correspondiente del proceso común.
+
+*Entregable y gate:* Ficha completa, owner y consumidor registrados.
+
+== Paso 2. Validar precondiciones con las áreas
+*Quién actúa:* Dominio y dependencias.
+
+. Infraestructura consulta imagen/capacidad; Network confirma IP/DNS; Storage confirma disco; Operaciones valida integración de CMDB y monitoring. Registrar sistema de verdad e identificador estable del host.
+. Registrar en el expediente qué se observó, quién decidió y la evidencia. El siguiente responsable confirma recepción antes de continuar.
+. Si falta la precondición o hay una desviación respecto del alcance, dejar el caso bloqueado, asignar responsable/fecha y volver al gate correspondiente del proceso común.
+
+*Entregable y gate:* Precondiciones y dependencias confirmadas o bloqueos anotados.
+
+== Paso 3. Revisar y decidir en comité
+*Quién actúa:* Comité y Dueño.
+
+. Comité aprueba host de laboratorio con alta en CMDB y monitoreo como condiciones de entrega. No declarar éxito si sólo se provisiona el SO; devolver si falta ownership o acceso a sistemas dependientes.
+. Registrar en el expediente qué se observó, quién decidió y la evidencia. El siguiente responsable confirma recepción antes de continuar.
+. Si falta la precondición o hay una desviación respecto del alcance, dejar el caso bloqueado, asignar responsable/fecha y volver al gate correspondiente del proceso común.
+
+*Entregable y gate:* Acta de admisión con alcance, condiciones, owner y fechas.
+
+*Guion de la reunión:* Solicitante lee la solicitud; Dominio expone precondiciones; Dev muestra propuesta; Seguridad expone riesgos; AAP confirma entorno; SCM confirma revisiones; Operaciones valida recuperación. Dueño registra decisión y condiciones en `teams/infraestructura/AUTO-INF-001/acta-comite.md`. El facilitador aprueba sólo el laboratorio cuando no existe integración autorizada.
+
+== Paso 4. Diseñar solución y recuperación
+*Quién actúa:* Dev y Dominio; A: Dueño.
+
+. Dev diseña pasos con checkpoints: provisionar, validar identidad, registrar/upsert CMDB e instalar/verificar agente. Decidir si una falla de CMDB conserva host en cuarentena o compensa; no borrar host que ya contiene datos sin autorización.
+. Registrar en el expediente qué se observó, quién decidió y la evidencia. El siguiente responsable confirma recepción antes de continuar.
+. Si falta la precondición o hay una desviación respecto del alcance, dejar el caso bloqueado, asignar responsable/fecha y volver al gate correspondiente del proceso común.
+
+*Entregable y gate:* Diseño, threat model, output y recuperación aceptados.
+
+== Paso 5. Preparar Git, accesos y responsabilidades
+*Quién actúa:* SCM, Seguridad y Admin AAP.
+
+. Seguridad revisa bootstrap, permisos y credenciales separadas por sistema. SCM solicita reviewer de Infraestructura. AAP fija destinos y Credential por integración; no reusar identidad privilegiada global.
+. Registrar en el expediente qué se observó, quién decidió y la evidencia. El siguiente responsable confirma recepción antes de continuar.
+. Si falta la precondición o hay una desviación respecto del alcance, dejar el caso bloqueado, asignar responsable/fecha y volver al gate correspondiente del proceso común.
+
+*Entregable y gate:* Rama del caso, reviewers, RACI y referencias de acceso.
+
+== Paso 6. Desarrollar la automatización
+*Quién actúa:* Dev Playbooks.
+
+. Dev usa examples/infraestructura.yml: os_image, cmdb_class y monitoring_profile. El rol local no instala SO ni comunica con CMDB. Adaptador real deberá reconciliar por identificador estable y no duplicar registros.
+. Registrar en el expediente qué se observó, quién decidió y la evidencia. El siguiente responsable confirma recepción antes de continuar.
+. Si falta la precondición o hay una desviación respecto del alcance, dejar el caso bloqueado, asignar responsable/fecha y volver al gate correspondiente del proceso común.
+
+*Entregable y gate:* Baseline local ejecutable; adaptador real separado y versionado.
+
+== Paso 7. Ejecutar pruebas y cambio controlado
+*Quién actúa:* Dev y Dueño; consulta al Dominio.
+
+. Cambiar monitoring_profile base a extended; Operaciones define métricas nuevas, coste y retención. El runner confirma referencia actualizada; el piloto debe demostrar que el agente realmente envía las nuevas métricas.
+. Registrar en el expediente qué se observó, quién decidió y la evidencia. El siguiente responsable confirma recepción antes de continuar.
+. Si falta la precondición o hay una desviación respecto del alcance, dejar el caso bloqueado, asignar responsable/fecha y volver al gate correspondiente del proceso común.
+
+*Entregable y gate:* Evidencias de las seis pruebas locales y diff revisado.
+
+=== Ejecutar el plan de pruebas local
+Preparar una vez el entorno del taller:
+
+[source,bash]
+----
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements-dev.txt
+----
+
+Ejecutar desde la raíz, con el entorno virtual activo:
+
+[source,bash]
+----
+yamllint .
+ansible-lint playbooks roles molecule
+python scripts/run_guided_lab.py --domain infraestructura --request-id AUTO-INF-001 --resource-name host-lab-001
+----
+
+El runner se detiene al primer fallo. Ejecuta el playbook existente seis veces para verificar sintaxis, baseline, segunda ejecución, rechazo de `INVALID_NAME`, cambio de `monitoring_profile` de `base` a `extended` y repetición del cambio. Para no alterar el ejemplo canónico, la variante aprobada se pasa como estado deseado completo por JSON sólo en el laboratorio. El Survey de producción no debe aceptar ese objeto libremente.
+
+[source,bash]
+----
+cat teams/infraestructura/AUTO-INF-001/host-lab-001/evidence/summary.json
+cat /tmp/automation-governance-lab/infraestructura/resources/host-lab-001.json
+cat /tmp/automation-governance-lab/infraestructura/outputs/AUTO-INF-001-host-lab-001.json
+----
+
+[cols="1,1,1",options="header"]
+|===
+|Prueba
+|Lo que comprueba Dev
+|Resultado esperado
+|`01-syntax`
+|Sintaxis del playbook
+|Exit 0
+|`02-baseline`
+|Inputs del ejemplo y read-back/output iguales
+|Estado baseline y `verified`, `simulation=true`
+|`03-repeat`
+|Misma solicitud y estado
+|Exit 0, `changed=0`, hashes sin modificación
+|`04-invalid`
+|Nombre fuera de política
+|Fallo esperado de validación y ninguna escritura
+|`05-change`
+|`monitoring_profile` cambia de `base` a `extended`
+|Read-back y output coinciden con variante
+|`06-repeat-change`
+|Variante repetida
+|Exit 0, `changed=0`, hashes estables
+|===
+
+
+Dev conserva `summary.json`, inputs, logs y outputs baseline/variante. Dominio comprueba el campo cambiado y tags. El runner termina con el estado de la variante; para repetir la baseline vuelve a ejecutar el runner. El número de cambios de la baseline puede ser cero si el recurso ya existía; no se exige creación cuando ya está conforme. Para la prueba de toda la suite ejecutar `molecule test` y revisar CI.
+
+=== Preparar el cambio que se enviaría a revisión
+Después de validar la variante, Dev modifica manualmente sólo `monitoring_profile` en `examples/infraestructura.yml` y registra el motivo. Revisar `git diff -- examples/infraestructura.yml`, ejecutar lint y Molecule, abrir PR con ticket, diff y evidencias. La variante del runner usa valores fijos del ejercicio; ejecutar sus seis pasos antes de editar la baseline. Si el ejemplo canónico ya contiene el valor final, elegir un nuevo caso de cambio con su propio plan y pruebas; no falsificar evidencias.
+
+== Paso 8. Revisar código y seguridad
+*Quién actúa:* Peer reviewer y Seguridad.
+
+. Reviewer comprueba tratamiento de altas parciales, retries y correlación host/CMDB. Seguridad verifica que bootstrap secrets se retiran y que monitoreo no extrae datos fuera del alcance.
+. Registrar en el expediente qué se observó, quién decidió y la evidencia. El siguiente responsable confirma recepción antes de continuar.
+. Si falta la precondición o hay una desviación respecto del alcance, dejar el caso bloqueado, asignar responsable/fecha y volver al gate correspondiente del proceso común.
+
+*Entregable y gate:* PR y Security review aprobados con observaciones cerradas.
+
+== Paso 9. Publicar release y configurar AAP
+*Quién actúa:* Admin AAP y Operaciones.
+
+. AAP configura playbooks/infraestructura.yml en simulación. Para integración dividir pasos de provisionamiento, registro y monitoreo con checkpoints; registrar outputs para correlación y no exponer secrets en artifacts.
+. Registrar en el expediente qué se observó, quién decidió y la evidencia. El siguiente responsable confirma recepción antes de continuar.
+. Si falta la precondición o hay una desviación respecto del alcance, dejar el caso bloqueado, asignar responsable/fecha y volver al gate correspondiente del proceso común.
+
+*Entregable y gate:* SHA revisado, Project sincronizado, JT, Survey y RBAC verificados.
+
+== Paso 10. Probar en proveedor no productivo
+*Quién actúa:* Dev y Dominio; A: Dueño.
+
+. Infraestructura verifica SO/identidad; Network consulta DNS y conectividad; Operaciones comprueba un único CI en CMDB, heartbeat de agente y una alerta de prueba controlada. Repetir no crea otro CI.
+. Registrar en el expediente qué se observó, quién decidió y la evidencia. El siguiente responsable confirma recepción antes de continuar.
+. Si falta la precondición o hay una desviación respecto del alcance, dejar el caso bloqueado, asignar responsable/fecha y volver al gate correspondiente del proceso común.
+
+*Entregable y gate:* Acta funcional y recuperación demostrada; pendiente si no hay proveedor.
+
+== Paso 11. Autorizar, solicitar y ejecutar
+*Quién actúa:* Operaciones; A: Dueño.
+
+. Ante CMDB caída, Operaciones registra fallo parcial, consulta host y evita reprovisionar. Continuar registro por ID al recuperarse el sistema si está autorizado; nunca cerrar solicitud con activo no inventariado.
+. Registrar en el expediente qué se observó, quién decidió y la evidencia. El siguiente responsable confirma recepción antes de continuar.
+. Si falta la precondición o hay una desviación respecto del alcance, dejar el caso bloqueado, asignar responsable/fecha y volver al gate correspondiente del proceso común.
+
+*Entregable y gate:* Autorización vigente, request ID, estado verificado y job ID.
+
+== Paso 12. Entregar, aceptar y operar
+*Quién actúa:* Operaciones y Consumidor.
+
+. Entregar host ID, nombre, registro CMDB, owner, perfil y métricas/alerta de prueba. Consumidor valida acceso; Operaciones acepta soporte. Retiro debe retirar host, CI y targets de monitoreo de manera coordinada.
+. Registrar en el expediente qué se observó, quién decidió y la evidencia. El siguiente responsable confirma recepción antes de continuar.
+. Si falta la precondición o hay una desviación respecto del alcance, dejar el caso bloqueado, asignar responsable/fecha y volver al gate correspondiente del proceso común.
+
+*Entregable y gate:* Output saneado aceptado y runbook con owner/suplente.
+
+== Incidente guiado: El host se crea correctamente, pero la CMDB no responde.
+*El facilitador lo introduce después del diseño o durante el piloto.*
+
+. Operaciones conserva ID del host y deja estado parcial. Infraestructura verifica que el host corresponde al ticket; Dev reintenta sólo upsert de CMDB con clave estable cuando el sistema vuelve. Dueño acepta la estrategia de conservación; Operaciones prueba que no existe CI duplicado y valida monitoreo antes de entregar.
+. Operaciones registra cronología, estado antes/después y consumidores afectados; Dueño decide si hay que volver al comité. Conservar job IDs y evidencia saneada.
+. Dev añade la prueba que hubiera detectado el incidente; Dominio la valida; Seguridad revisa impacto; SCM exige revisión de la corrección; AAP publica la revisión aprobada.
+. Consumidor acepta la nueva entrega. La simulación local no reproduce este incidente de proveedor: representarlo como ejercicio de mesa si no existe un destino autorizado y marcar la evidencia pendiente.
+
+== Cierre y traspaso entre responsables
+[cols="1,1,1",options="header"]
+|===
+|Traspaso
+|Evidencia que entrega el responsable
+|Confirmación requerida
+|Solicitante → Dueño
+|Ficha de AUTO-INF-001 y aceptación esperada
+|Owner toma el caso
+|Dueño/comité → Dev
+|Acta, límites y condiciones
+|Diseño autorizado
+|Dev → reviewers
+|PR, diff, seis pruebas y RACI
+|Peer review y Security review
+|SCM → AAP
+|SHA revisado y dependencias
+|Project y EE coinciden
+|Dev/Dominio → Dueño
+|Pruebas del proveedor y recuperación
+|Candidato aprobado para el destino
+|Dueño → Operaciones
+|Autorización, ventana y runbook
+|Preflight y revisión correctos
+|Operaciones → Consumidor
+|Output saneado, verificaciones y job IDs
+|Aceptado o devuelto con motivo
+|Consumidor → Dueño
+|Aceptación del resultado
+|Cierre y fecha de revisión
+|===
+
+
+== Demo de cinco minutos
+. Mostrar solicitud y acta del comité, incluida cualquier condición.
+. Explicar responsables, scope y cambio de `monitoring_profile`.
+. Mostrar `summary.json`, comparación del estado y rechazo de input inválido.
+. Explicar verificación real y respuesta al incidente; marcar lo que sigue pendiente.
+. Consumidor lee su aceptación o devolución y Operaciones presenta runbook y próxima revisión.
+
+No cerrar como producción lista si sólo se ejecutó el rol local. Anotar brechas con owner y fecha en el roadmap.
+
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="07-seguridad.html">Anterior: Caso 5. Hardening, certificados y compliance</a><a class="step-button" rel="next" href="07-storage.html">Siguiente: Caso 7. Volumen, snapshots y mapping</a></nav>
+++++

@@ -1,5 +1,9 @@
 = 8. Cierre y roadmap de 90 días
 
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="07-storage.html">Anterior: Caso 7. Volumen, snapshots y mapping</a><a class="step-button" rel="next" href="09-secrets.html">Siguiente: Guía de secrets</a></nav>
+++++
+
 == Plan de adopción
 [cols="1,1,1,1,1",options="header"]
 |===
@@ -88,3 +92,7 @@ Completar caso y owner, clasificar riesgo, acordar RACI, diseñar recuperación,
 
 == Acuerdos de cierre
 Cada equipo nombra owner y suplente. El foro asigna fecha de primera revisión, repos del piloto y administrador de controles. El facilitador registra decisiones pendientes y una acción con owner y fecha por brecha. La aceptación del modelo corresponde a los responsables de la organización.
+
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="07-storage.html">Anterior: Caso 7. Volumen, snapshots y mapping</a><a class="step-button" rel="next" href="09-secrets.html">Siguiente: Guía de secrets</a></nav>
+++++

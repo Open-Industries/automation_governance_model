@@ -1,5 +1,9 @@
 = 1. Fundamentos y contexto
 
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="index.html">Anterior: Inicio y preparación</a><a class="step-button" rel="next" href="02-modelo.html">Siguiente: 2. Modelo de gobierno</a></nav>
+++++
+
 == Gobierno de automatización
 El gobierno define quién decide, quién ejecuta, qué controles aplican y qué evidencia demuestra que una automatización produce un resultado autorizado. Incluye su definición, diseño, ejecución, entrega de resultados, operación y retiro.
 
@@ -50,3 +54,7 @@ Cada equipo presenta un incidente o dificultad de automatización en dos minutos
 
 == Evidencia y aceptación
 Entregar un mapa de riesgos y una línea base. El dueño del dominio valida el problema y el sponsor confirma el alcance del piloto.
+
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="index.html">Anterior: Inicio y preparación</a><a class="step-button" rel="next" href="02-modelo.html">Siguiente: 2. Modelo de gobierno</a></nav>
+++++

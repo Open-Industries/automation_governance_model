@@ -1,95 +1,322 @@
-= 7. Ejercicio dinámico
+= 7. Ejercicio por dominios: plan de acción de extremo a extremo
 
-== Formato y timebox
-Un equipo por dominio más un equipo transversal. El compacto dedica 180 minutos al ejercicio: 20 a selección, 30 a diseño y RACI, 45 a desarrollo, 30 a pruebas, 25 a AAP o recorrido guiado y 30 a demo y revisión. El ampliado permite 240 minutos y un adaptador real si existe un destino autorizado.
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="06-controles.html">Anterior: 6. Validaciones y controles</a><a class="step-button" rel="next" href="07-virtualizacion.html">Siguiente: Caso 1. VM estándar</a></nav>
+++++
 
-== Pasos del equipo
-. Copiar `templates/use-case.md` y `templates/raci-editable.csv` al directorio `teams/<equipo>/` de su rama.
-. Elegir caso, definir inputs y outputs, establecer owner, riesgo y criterios de aceptación.
-. Documentar permisos, límites de destino, falla parcial y recuperación en `templates/threat-model.md`.
-. Ejecutar el ejemplo de su dominio y examinar recurso y output en `/tmp/automation-governance-lab`.
-. Cambiar una especificación del dominio en `examples/<dominio>.yml`, abrir PR y revisar checks.
-. Repetir la ejecución: sin cambios en la segunda pasada. Ejecutar una prueba negativa.
-. Configurar JT y survey en AAP de laboratorio o completar el contrato con capturas del recorrido guiado. El recorrido guiado no cuenta como evidencia de ejecución en AAP.
-. Completar solicitud, autorización, entrega de output y aceptación. Capturar revisión y job ID cuando exista controller.
-. Presentar la demo y defender RACI, riesgo y recuperación ante el equipo transversal.
-. Registrar brechas para el piloto de 90 días.
+== Cómo seguir este guion
+El equipo recibe una solicitud nueva y la convierte en una automatización gobernada. Cada paso identifica quién actúa, qué debe producir y cuándo puede avanzar. El facilitador representa el comité; otro participante representa al consumidor. Nadie debe interpretar el desarrollo del playbook como autorización de ejecución en producción.
 
-== Casos por dominio
-[cols="1,1,1,1",options="header"]
+*Dos recorridos:* el laboratorio ejecutable usa archivos locales y datos sintéticos; el piloto de integración requiere un proveedor y un controller autorizados. Una prueba local exitosa no demuestra que se creó una VM, VLAN, instancia, aplicación, certificado, host o volumen real. Registrar por separado las evidencias de ambos recorridos.
+
+== Elegir un escenario y seguir sus pasos
+Cada guía incluye la solicitud, las decisiones del comité, las actividades de todas las áreas, comandos, resultados esperados, un cambio controlado y una incidencia resuelta.
+
+[cols="1,1,1",options="header"]
 |===
-|Dominio
-|Caso
-|Inputs particulares
-|Verificación real requerida
+|Equipo
+|Guion detallado
+|Entrega que acepta el consumidor
 |Virtualización
-|Clonar VM estándar
-|template, network, datastore, cpu, memory_mb
-|Estado VM, NIC, ubicación y tags
+|xref:07-virtualizacion.adoc[Caso 1: VM estándar]
+|VM con capacidad, red y datastore acordados
 |Network
-|VLAN, ACL y switchport
-|vlan_id, switchport, acl
-|Config running y conectividad autorizada
+|xref:07-network.adoc[Caso 2: VLAN, ACL y switchport]
+|Conectividad autorizada sin perder gestión
 |Cloud
-|Instancia gobernada
-|image, flavor, security_group, backup_policy
-|Instancia, IAM, puertos y backup
+|xref:07-cloud.adoc[Caso 3: instancia gobernada]
+|Instancia etiquetada con red, acceso y backup
 |Plataformas
-|Aplicación con health check
-|image_digest, namespace, replicas, health_path
-|Readiness, endpoint y rollback
+|xref:07-plataformas.adoc[Caso 4: despliegue de aplicación]
+|Versión sana y recuperación comprobada
 |Seguridad
-|Hardening y certificados
-|profile, certificate_ref, compliance_policy
-|Perfil aplicado, cert válido y scan
+|xref:07-seguridad.adoc[Caso 5: hardening y certificados]
+|Perfil validado, certificado vigente y hallazgos
 |Infraestructura
-|Host registrado
-|os_image, cmdb_class, monitoring_profile
-|Host, CMDB y agente activo
+|xref:07-infraestructura.adoc[Caso 6: host, CMDB y monitoreo]
+|Host registrado y observable
 |Storage
-|Volumen y mapping
-|size_gib, snapshot_policy, host_group
-|Tamaño, política y acceso del host
+|xref:07-storage.adoc[Caso 7: volumen, snapshots y mapping]
+|Volumen correcto y acceso exclusivo del host
 |===
 
 
-`examples/` contiene datos sintéticos y una ficha técnica por dominio. El rol compartido convierte cada especificación en un archivo de estado con resultado verificable. Sustituir esa fase por módulos de una collection apropiada sólo en una rama con acceso a proveedor autorizado. Documentar y fijar la versión de esa collection y probar en EE.
+== Preparación del facilitador y reparto de responsabilidades
+. Preparar un checkout del repositorio, Python 3.11, un entorno virtual y `requirements-dev.txt`. Confirmar que el inventory local apunta a localhost. Para AAP reservar organization, EE aprobado e inventory de laboratorio.
+. Asignar personas a Solicitante, Dueño del caso, Dev Playbooks, Seguridad, Git/SCM, Admin AAP, Dominio técnico y Operaciones/SRE. Una persona puede representar varios roles en el taller, pero las decisiones deben quedar registradas por rol.
+. Formar un comité de gobierno con Dueño, Seguridad, responsable del dominio, SCM, AAP y Operaciones. Invitar al consumidor para explicar el valor; Dev expone el diseño. Registrar presidente, asistentes, decisión, fecha y condiciones.
+. Crear una carpeta `teams/<dominio>/<ticket>/` y copiar las plantillas. Mantener el expediente en la rama del caso. Logs sintéticos pueden adjuntarse; evidencias reales sensibles deben ir a un repositorio de evidencias con permisos y retención aprobados.
+. Entregar una tarjeta de incidente después del diseño. Reservar cinco minutos para la demo final y cinco para preguntas.
 
-== Tarjetas de incidente
-El facilitador asigna una a cada equipo después del diseño:
-* Credencial vencida antes de ejecución: detener, rotar y repetir con evidencia.
-* Solicitante pide saltar gate de producción: tramitar excepción o rechazar.
-* Recurso ya existe con parámetros distintos: definir reconciliación y ownership.
-* API tarda más del timeout: consultar estado antes de repetir una operación de creación.
-* Output contiene un dato sensible: detener notificación, sanear y evaluar alcance.
-* Cambio aprobado pierde su owner: asignar suplente antes de promover.
-* Rollback afecta recursos compartidos: recuperar sólo el alcance autorizado o escalar.
+*RACI:* usar `templates/raci-global.csv` como referencia y completar `templates/raci-editable.csv`. Un A por actividad y al menos un R. El comité es un foro de decisión; el Dueño conserva el A de admisión y diseño. Si la organización delega aprobación productiva a un CAB, documentar la delegación en la RACI antes de ejecutar. La revisión de Seguridad tiene su propio A y no desaparece por una aprobación del comité.
 
-== Evaluación
+== Paso 1. Recibir y registrar el nuevo elemento de automatización
+*Actúa: Solicitante. Apoya: Operaciones. Valida: Dueño del dominio.*
+
+. Abrir un ticket con identificador único, dominio, descripción del trabajo manual actual, frecuencia, consumidores y fecha requerida.
+. Completar `use-case.md`: objetivo observable, entradas con tipo y límites, precondiciones, resultado, destino permitido, exclusiones, datos tratados, impacto y dependencias.
+. Añadir criterios verificables: qué resultado se aceptará, quién lo comprobará y qué resultado se considerará fallido. Registrar autorización del propietario del recurso de destino.
+. Operaciones verifica duplicados y deriva al Dueño correcto. El Dueño acepta la responsabilidad y registra suplente. Si faltan datos, devolver la solicitud y anotar las preguntas; no inventar inputs.
+
+*Salida y gate:* ticket y ficha completos, owner asignado, consumidor identificado. Estado `Recibido` → `Listo para comité`.
+
+== Paso 2. Evaluar viabilidad antes del comité
+*Actúan: Dueño y Dominio técnico. Consultados: Dev, Seguridad, AAP y Operaciones.*
+
+. Comparar con el catálogo existente: ¿se reutiliza, se extiende o se crea una automatización?
+. Dominio confirma capacidad, alcance, dependencias y APIs disponibles. Dev propone una implementación pequeña y estima esfuerzo. AAP confirma EE, conectividad y acceso de laboratorio.
+. Seguridad clasifica privilegios, datos, exposición y reversibilidad. Operaciones identifica ventana, observabilidad, soporte y recuperación.
+. Dueño prepara una recomendación con beneficio, coste, riesgo y alcance del piloto. Si no existe destino autorizado, aprobar sólo simulación y dejar integración como brecha.
+
+*Salida y gate:* recomendación de admisión y riesgos iniciales. Ninguna credencial se adjunta al expediente.
+
+== Paso 3. Celebrar la revisión del comité
+*Conduce: presidente del comité. Decide admisión: Dueño. Cada control lo valida su responsable.*
+
+. Solicitante presenta problema y criterio de aceptación en dos minutos. Dueño presenta valor, alcance y owner.
+. Dominio explica restricciones; Dev presenta solución y dependencias; Seguridad presenta riesgos; SCM presenta controles; AAP y Operaciones presentan viabilidad y soporte.
+. Revisar tres preguntas: ¿el caso aporta valor?, ¿el riesgo puede controlarse?, ¿hay capacidad y ownership para operarlo?
+. Resolver `Aprobado`, `Aprobado con condiciones`, `Devuelto` o `Rechazado`. Registrar justificación, asistentes, responsables y fecha de cada condición. Aprobación condicionada permite sólo actividades explícitamente autorizadas; no da permiso de ejecución sobre un destino pendiente.
+. Dueño incorpora la decisión en el expediente. Para una devolución, el solicitante corrige y solicita nueva revisión. Para rechazo, cerrar con motivo y alternativa.
+
+*Salida y gate:* acta de admisión firmada o registrada en el sistema de tickets. Estado `Diseño autorizado`. Esta admisión no sustituye peer review, Security review ni autorización de producción.
+
+== Paso 4. Diseñar el contrato técnico y la recuperación
+*Responsable: Dev. A: Dueño. Consultados: Dominio, Seguridad, AAP y Operaciones.*
+
+. Definir estado deseado y fuente de verdad. Delimitar los recursos que se pueden crear, modificar o retirar; decidir qué ocurre si ya existen.
+. Especificar validaciones de naming, rangos, tipos, valores permitidos y relaciones entre campos. El rol local sólo comprueba presencia de campos del dominio; el adaptador real debe añadir validaciones semánticas.
+. Completar threat model: identidad de ejecución, secretos referenciados, permisos mínimos, endpoints, datos en logs y evidencia saneada.
+. Definir salida: request ID, use-case ID, revisión del código, destino, estado, resultado y evidencia. Diseñar persistencia externa para output de AAP; el filesystem del EE no es almacenamiento duradero.
+. Especificar pruebas positivas, negativas, repetición, falla parcial y recuperación. Para operaciones irreversibles, usar restauración o compensación aprobada en lugar de prometer rollback automático.
+. Dominio valida la solución; Dueño aprueba criterios; Operaciones valida runbook y escalamiento. Registrar decisiones en `adr.md`.
+
+*Salida y gate:* diseño revisado, RACI completa, contrato de output y recuperación acordada.
+
+== Paso 5. Preparar Git y el expediente
+*Responsable: Git/SCM. Ejecuta código: Dev.*
+
+. Dev crea `feature/<ticket>-<dominio>` desde main actualizada. Crear la carpeta del caso y copiar plantillas antes de desarrollar.
+. SCM asigna revisores por dominio y Seguridad; comprobar que los equipos de CODEOWNERS existen. Configurar protección y checks requeridos en la plataforma Git: el archivo de ejemplo por sí solo no aplica políticas.
+. Separar variables funcionales de referencias a Credentials. No introducir contraseñas, tokens, inventarios productivos ni valores sensibles en Git.
+. Registrar baseline del código, versiones de collections y EE cuando exista integración. Preparar PR en borrador con alcance y plan de pruebas.
+
+*Salida y gate:* rama, expediente y revisores definidos; destino sigue limitado al laboratorio.
+
+== Paso 6. Desarrollar el playbook del dominio
+*Responsable y A: Dev. Consultado: Dominio técnico.*
+
+. Leer `playbooks/<dominio>.yml` y `examples/<dominio>.yml`. El primero invoca `governed_resource`; el segundo declara campos y datos sintéticos.
+. Leer el rol compartido: validar inputs antes de escribir, reconciliar el recurso, leerlo de vuelta, verificar igualdad, guardar output y publicar `set_stats`.
+. Ejecutar la baseline del escenario. Cambiar únicamente el campo indicado en la guía y revisar el diff.
+. Para el piloto real, desarrollar un adaptador con módulos soportados por el proveedor. Fijar collection y EE, consultar estado antes de crear y añadir verificaciones funcionales independientes del resultado del módulo.
+. Aplicar handlers sólo donde corresponda, tratar timeouts y registrar fallos sin exponer secrets. Documentar límites de check mode por módulo.
+
+*Salida y gate:* implementación revisable y evidencias de laboratorio; no hay integración implícita con proveedor.
+
+== Paso 7. Ejecutar validaciones técnicas y funcionales locales
+*Responsable y A: Dev. Verifica funcionalidad: Dominio. Consulta: Operaciones.*
+
+. Ejecutar syntax-check, yamllint, ansible-lint y Molecule. Revisar el scan de secrets en CI y conservar enlaces a los jobs.
+. Ejecutar `scripts/run_guided_lab.py` con los argumentos de la guía. Produce seis pruebas: sintaxis, baseline, repetición sin cambios, input inválido sin escritura, cambio controlado y repetición del cambio.
+. Revisar `evidence/summary.json` y los logs. El runner exige códigos de retorno esperados, `changed=0` en repeticiones, hashes estables y output coincidente con el estado leído.
+. Dominio confirma que el cambio observado corresponde al campo esperado. Registrar qué validaciones funcionales reales todavía no se ejecutaron.
+. Si falla una prueba, Dev corrige, repite las pruebas afectadas y actualiza evidencias. No seguir con un check fallido.
+
+*Salida y gate:* tests locales y CI verdes, límites del laboratorio identificados. No confundir `planned` en check mode con `verified`.
+
+== Paso 8. Hacer peer review y Security review
+*Peer reviewer: otro Dev o experto de Dominio. A de Security review: Seguridad.*
+
+. Peer reviewer compara implementación con diseño, inputs, idempotencia, recuperación y contrato de salida; revisa que las pruebas validen comportamiento.
+. Seguridad revisa privilegios, rutas, destino, secrets, logs, `no_log`, diff y acceso al output. Documentar observaciones y su cierre; no aprobar sólo porque el scan de secrets pasó.
+. Revisar el control de lanzamiento en AAP y quién puede aprobar gates. Probar los permisos efectivos con las identidades del laboratorio, incluida posibilidad de autoaprobación; no confiar sólo en nombres de roles.
+. Dueño confirma que no cambió el alcance aprobado. Si cambia riesgo o destino, volver al comité.
+
+*Salida y gate:* PR aprobado, Security review registrado y observaciones resueltas o excepción formal con vigencia.
+
+== Paso 9. Crear release y preparar AAP
+*A de merge: SCM. R: Dev. A/R de configuración AAP: Admin AAP.*
+
+. SCM verifica checks y revisiones del candidato; Dev mergea según la política. Registrar SHA exacto revisado.
+. Admin AAP configura Project con URL del repo y revisión aprobada; sincroniza y registra revisión efectiva. Seleccionar EE aprobado y inventory de laboratorio; confirmar reachability si hay proveedor.
+. Crear JT por dominio con playbook, timeout e inputs limitados. Para el rol local usar localhost dentro del EE; no asociar credenciales de infraestructura que el ejemplo no necesita.
+. Crear Survey para `request_id` y `resource_name`. Mantener variables internas, destinos, Credentials y branch fuera del control del consumidor. La validación del playbook sigue siendo obligatoria.
+. Aplicar el diseño `aap/job-template.yaml` y `aap/workflow.yaml` por UI o automatización probada. Son contratos, no payloads importables. Adaptar nombres y credenciales a la versión instalada.
+. Configurar workflow de preflight, aprobación cuando aplique, ejecución, entrega y falla. Implementar los JT de preflight/entrega: el repositorio declara su contrato, no aporta integraciones ITSM ni notificaciones reales.
+
+*Salida y gate:* Project sincronizado, JT y workflow revisados, permisos efectivos probados, revisión fijada y capturas registradas.
+
+== Paso 10. Probar integración en entorno no productivo
+*A: Dueño. R: Dev y Dominio. Apoyan: AAP y Operaciones.*
+
+. Ejecutar con inputs aprobados y registrar workflow ID, job ID, revisión efectiva, inventory y EE.
+. Dominio consulta el proveedor por una vía independiente y valida el resultado real definido en su guía. Ejecutar repetición e input inválido en destino de laboratorio.
+. Introducir la falla parcial acordada y demostrar recuperación acotada; recoger evidencia antes/después. Si sólo hay simulación local, marcar integración `Pendiente` y no simular capturas de AAP.
+. Seguridad verifica que el consumidor no puede cambiar el destino ni acceder a secretos. Operaciones comprueba logs saneados, persistencia y escalamiento.
+. Dueño revisa acta de pruebas y decide si el caso es candidato a promoción.
+
+*Salida y gate:* acta funcional con casos aprobados y fallidos; el piloto sólo avanza cuando se cierran fallos bloqueantes.
+
+== Paso 11. Autorizar ejecución y recibir solicitud operativa
+*Autoriza destino productivo: Dueño o delegado documentado. Solicita: Consumidor. Coordina: Operaciones.*
+
+. Preparar ticket de cambio con release, impacto, ventana, respaldo, recuperación, dependencias y aprobador independiente cuando lo requiera la política.
+. Verificar que las condiciones del comité y Seguridad están cerradas. Registrar autorización explícita para destino y ventana; rechazar una petición de saltar el gate.
+. Consumidor presenta request ID e inputs del catálogo. Operaciones verifica owner, autorización vigente y coincidencia entre revisión probada y revisión a ejecutar.
+. Programar o lanzar sólo sobre inventory y Credential permitidos. Evitar schedules hasta validar repetición, concurrencia y mecanismo de detener el trabajo.
+
+*Salida y gate:* solicitud autorizada, release conocido y operador identificado. En este taller se representa la autorización productiva; las ejecuciones siguen siendo de laboratorio.
+
+== Paso 12. Ejecutar y gestionar fallos
+*R: Operaciones. A: Dueño. Apoyan: Dominio y Admin AAP.*
+
+. Preflight comprueba inputs, autorización, estado del destino y condiciones. Un fallo detiene la ruta de ejecución.
+. Aprobador revisa request ID, destino y release antes de aprobar el nodo. Registrar identidad y decisión.
+. Operaciones observa ejecución y valida resultado. Si existe timeout o fallo parcial, consultar estado real antes de reintentar; no asumir que un fallo significa ausencia de cambios.
+. Aplicar sólo recuperación autorizada, escalar impactos compartidos y registrar incidente. Un nodo de falla no debe borrar recursos automáticamente sin diseño y permiso.
+
+*Salida y gate:* ejecución verificada o incidente con estado explícito; no entregar éxito si faltan verificaciones.
+
+== Paso 13. Entregar output y obtener aceptación
+*R de entrega: Operaciones. A de entrega: Dueño. A de aceptación: Solicitante.*
+
+. Validar esquema, request ID, release, estado y datos saneados. Guardar output en destino duradero con ACL y retención; anexar enlace al ticket.
+. Entregar resumen y evidencias autorizadas al consumidor. `set_stats` publica artifacts del job; la persistencia y notificación requieren integración adicional.
+. Consumidor contrasta el resultado con los criterios iniciales y registra `Aceptado` o `Devuelto` con motivo. Éxito de Ansible no equivale a aceptación de negocio.
+. Resolver devolución, repetir pruebas pertinentes y entregar nueva evidencia sin perder historial.
+
+*Salida y gate:* aceptación explícita o defecto abierto; cerrar sólo después de la aceptación.
+
+== Paso 14. Operar, mejorar y retirar
+*A: Dueño. R: Operaciones. Admin AAP participa en retiro.*
+
+. Medir tiempo desde recepción, ejecuciones verificadas, fallos, ahorro neto y completitud de evidencia.
+. Revisar incidentes y cambios; mantener suplentes, dependencias, credenciales y runbook vigentes.
+. Comité revisa resultados del piloto y decide expansión, corrección o retiro. Asignar acciones del roadmap con owner y fecha.
+. Para retiro, deshabilitar schedules y acceso, retirar JT según política, revocar credenciales exclusivas y conservar evidencia; cualquier eliminación de recursos necesita su propia autorización.
+
+*Salida:* servicio operable, brechas priorizadas y fecha de revisión.
+
+== Acta del comité y expediente mínimo
+Crear `acta-comite.md` en la carpeta del ticket con esta estructura:
+
+[source,text]
+----
+Ticket / caso / dominio:
+Fecha / presidente / asistentes y roles:
+Problema y valor esperado:
+Alcance y destinos permitidos:
+Owner / suplente / consumidor:
+Riesgo / dependencias / permisos:
+Decisión: aprobado | aprobado con condiciones | devuelto | rechazado
+Motivo:
+Condiciones: acción, responsable, vencimiento y evidencia de cierre
+Actividades autorizadas por esta decisión:
+Gates restantes y próxima revisión:
+Conformidad registrada por cada responsable:
+----
+
+[cols="1,1,1",options="header"]
+|===
+|Evidencia
+|Quién la produce
+|Quién la valida
+|Ticket y ficha
+|Solicitante y Dueño
+|Dueño
+|Acta de admisión
+|Presidente y Dueño
+|Miembros del comité
+|Diseño, threat model y RACI
+|Dev y responsables de control
+|Dueño y Seguridad
+|PR, checks y Security review
+|Dev, CI y Seguridad
+|SCM
+|SHA, Project, JT, RBAC y EE
+|Admin AAP
+|Operaciones y Seguridad
+|Pruebas locales y del proveedor
+|Dev y Dominio
+|Dueño
+|Autorización y job IDs
+|Aprobador y Operaciones
+|Dueño
+|Output y aceptación
+|Operaciones y Consumidor
+|Consumidor
+|Runbook y mejoras
+|Operaciones
+|Dueño
+|===
+
+
+== Tarjetas de incidente y resolución
+[cols="1,1,1",options="header"]
+|===
+|Incidente
+|Primera acción y responsable
+|Condición para reanudar
+|Credencial vencida
+|Operaciones detiene; custodio rota sin exponer el valor
+|Credencial validada, estado del destino consultado y permiso vigente
+|Pedido de saltar gate
+|Dueño rechaza o tramita excepción formal
+|Decisión documentada antes de lanzamiento
+|Recurso con otro owner
+|Dominio consulta inventario y ownership
+|Reconciliación explícitamente autorizada; no apropiarse del recurso
+|Timeout del proveedor
+|Operaciones consulta estado por ID de operación
+|Resultado conocido antes de repetir creación
+|Output sensible
+|Operaciones suspende entrega; Seguridad evalúa exposición
+|Output saneado, acceso corregido e incidente tratado
+|Owner ausente
+|Comité asigna suplente
+|A identificado antes de promover
+|Recuperación compartida
+|Dominio acota impacto y escala
+|Plan específico autorizado y ventana acordada
+|===
+
+
+== Evaluación y tiempos
+Para el formato de 180 minutos: recepción y comité 25; diseño/RACI 30; desarrollo 40; pruebas/review 35; recorrido AAP 25; entrega/demo 25. En 240 minutos añadir pruebas del proveedor y recuperación si existen permisos y entorno. Los siete equipos trabajan en paralelo; seguir los siete guiones secuencialmente requiere varias sesiones.
+
 [cols="1,1,1",options="header"]
 |===
 |Dimensión
 |Puntos
-|Criterio
-|Caso y contratos
+|Evidencia para aprobar
+|Recepción y comité
 |20
-|Objetivo, inputs, output y aceptación completos
-|RACI y gates
+|Caso completo, decisión y condiciones cerradas
+|Diseño y responsabilidades
 |20
-|Un A y un R, separación y evidencias
-|Implementación
+|Un A por etapa, riesgo y recuperación definidos
+|Código y revisión
 |20
-|Código claro, variables y secrets gobernados
+|Cambio trazable, PR y Security review
 |Pruebas
 |20
-|Positiva, negativa, idempotencia y evidencia
-|Operación
+|Baseline, negativa, cambio y repeticiones verificadas
+|Entrega y operación
 |20
-|AAP o contrato guiado, recuperación y entrega
+|Output aceptado, límites del piloto y runbook
 |===
 
 
-Propuesta de aprobación: 80/100, sin secretos expuestos ni gate alto omitido. El facilitador decide adopción de este umbral. Un equipo sin AAP puede completar el aprendizaje, pero debe ejecutar el piloto en controller antes de promoción productiva.
+Propuesta del taller: 80/100 sin gates bloqueantes omitidos. Mostrar en la demo el ticket, acta, diff, `summary.json`, output y aceptación. Un equipo sin controller puede completar el aprendizaje; su integración AAP queda pendiente antes de promover.
 
-== Demo final de cinco minutos
-Presentar problema, cambio realizado, segunda ejecución, output, RACI y respuesta a la tarjeta de incidente. El consumidor confirma si el output cumple su necesidad.
+== Documentación técnica de apoyo
+Las pantallas y permisos deben verificarse en la versión instalada. Los ejemplos de navegación AAP se orientan a 2.5; AWX y otras versiones pueden variar.
+
+* https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_intro.html[Ejecución y validaciones de playbooks].
+* https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_execution/controller-job-templates[Job Templates de AAP 2.5].
+* https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_execution/controller-workflow-job-templates[Workflow Job Templates y approvals de AAP 2.5].
+
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="06-controles.html">Anterior: 6. Validaciones y controles</a><a class="step-button" rel="next" href="07-virtualizacion.html">Siguiente: Caso 1. VM estándar</a></nav>
+++++

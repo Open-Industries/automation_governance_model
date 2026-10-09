@@ -1,5 +1,9 @@
 = 3. Roles y responsabilidades
 
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="02-modelo.html">Anterior: 2. Modelo de gobierno</a><a class="step-button" rel="next" href="04-git.html">Siguiente: 4. Git y repositorios</a></nav>
+++++
+
 == Roles por ámbito
 [cols="1,1,1",options="header"]
 |===
@@ -198,3 +202,7 @@ Copiar `templates/raci-editable.csv`, sustituir nombres de roles por personas o 
 
 == Salida
 RACI aprobado por dueños de dominio y equipo transversal, con suplentes y fecha de revisión.
+
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="02-modelo.html">Anterior: 2. Modelo de gobierno</a><a class="step-button" rel="next" href="04-git.html">Siguiente: 4. Git y repositorios</a></nav>
+++++

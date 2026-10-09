@@ -1,5 +1,9 @@
 = Referencias técnicas
 
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="11-publicacion.html">Anterior: Publicación y operación del portal</a></nav>
+++++
+
 Estas fuentes sustentan las funciones de plataforma y herramientas. Las reglas de gobierno, agenda y metas del piloto son propuestas del workshop que la organización debe aprobar.
 
 * https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/using_automation_execution/index[AAP 2.5: Using automation execution]: proyectos, surveys, RBAC y artifacts.
@@ -14,3 +18,7 @@ Estas fuentes sustentan las funciones de plataforma y herramientas. Las reglas d
 * https://psehgaft.github.io/ocp-ansible-agent-installer/ocp-redfish-installer/main/index.html[Workshop de referencia]: identidad visual original que se adapta a Open Demo Platform.
 
 Revisado para preparar el workshop el 7 de octubre de 2026. La versión instalada del controller y sus módulos debe confirmarse durante preparación.
+
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="11-publicacion.html">Anterior: Publicación y operación del portal</a></nav>
+++++

@@ -1,5 +1,9 @@
 = 5. Ciclo de vida e implementación
 
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="04-git.html">Anterior: 4. Git y repositorios</a><a class="step-button" rel="next" href="06-controles.html">Siguiente: 6. Validaciones y controles</a></nav>
+++++
+
 == Mapa de extremo a extremo
 [cols="1,1,1",options="header"]
 |===
@@ -75,3 +79,7 @@ En el laboratorio la repetición es idempotente y conserva el estado. La recuper
 
 == Salida
 Mapa con owners, contrato de ejecución, plantilla AAP y evidencia de una solicitud completada.
+
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="04-git.html">Anterior: 4. Git y repositorios</a><a class="step-button" rel="next" href="06-controles.html">Siguiente: 6. Validaciones y controles</a></nav>
+++++

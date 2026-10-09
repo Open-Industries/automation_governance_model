@@ -1,5 +1,9 @@
 = Modelos de gobierno de automatización
 
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="next" href="01-fundamentos.html">Siguiente: 1. Fundamentos y contexto</a></nav>
+++++
+
 == Resultado del workshop
 Cada equipo entrega un caso de uso versionado, un RACI firmado, un playbook de laboratorio, evidencia de pruebas, un contrato de output y un plan de promoción a AAP. El comité transversal revisa el conjunto y acuerda el modelo federado de gobierno para los siete dominios.
 
@@ -70,3 +74,7 @@ Abrir `http://localhost:8000`. El portal local usa el mismo contenido del worksh
 link:../../downloads/workshop-lab.zip[Descargar kit de laboratorio]
 
 link:../../slides/index.html[Presentación navegable]
+
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="next" href="01-fundamentos.html">Siguiente: 1. Fundamentos y contexto</a></nav>
+++++

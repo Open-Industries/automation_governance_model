@@ -1,5 +1,9 @@
 = 4. Estructura Git y repositorios
 
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="03-roles-raci.html">Anterior: 3. Roles y RACI</a><a class="step-button" rel="next" href="05-ciclo-vida.html">Siguiente: 5. Ciclo de vida y AAP</a></nav>
+++++
+
 == Selección de arquitectura
 [cols="1,1,1",options="header"]
 |===
@@ -58,3 +62,7 @@ Registrar commit, versión de collections, digest del EE y evidencia. AAP debe s
 
 == Salida
 ADR sobre repos y branching, owners por path, lista de checks y evidencia del primer PR.
+
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="03-roles-raci.html">Anterior: 3. Roles y RACI</a><a class="step-button" rel="next" href="05-ciclo-vida.html">Siguiente: 5. Ciclo de vida y AAP</a></nav>
+++++

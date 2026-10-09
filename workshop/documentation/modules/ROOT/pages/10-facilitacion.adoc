@@ -1,5 +1,9 @@
 = Guía del facilitador
 
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="09-secrets.html">Anterior: Guía de secrets</a><a class="step-button" rel="next" href="11-publicacion.html">Siguiente: Publicación y operación del portal</a></nav>
+++++
+
 == Agenda compacta de ocho horas
 [cols="1,1,1",options="header"]
 |===
@@ -61,3 +65,7 @@ Sin AAP, realizar el laboratorio local y completar el contrato de configuración
 
 == Cierre del facilitador
 Recoger expedientes, validar cobertura del RACI, anotar brechas y asignar próxima revisión. Archivar sólo evidencia sintética. Las decisiones de producción quedan en los sistemas aprobados de la organización.
+
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="09-secrets.html">Anterior: Guía de secrets</a><a class="step-button" rel="next" href="11-publicacion.html">Siguiente: Publicación y operación del portal</a></nav>
+++++

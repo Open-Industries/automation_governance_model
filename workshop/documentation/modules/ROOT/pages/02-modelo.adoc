@@ -1,5 +1,9 @@
 = 2. Modelo de gobierno
 
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="01-fundamentos.html">Anterior: 1. Fundamentos y contexto</a><a class="step-button" rel="next" href="03-roles-raci.html">Siguiente: 3. Roles y RACI</a></nav>
+++++
+
 == Principios y reglas aplicables
 [cols="1,1,1",options="header"]
 |===
@@ -73,3 +77,7 @@ El catálogo lista dominio, repositorio, release, Job Template, owner, riesgo, �
 
 == Actividad y salida
 Clasificar el caso del equipo y registrar sus gates. El owner y Seguridad validan la clasificación y el tiempo de revisión.
+
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="01-fundamentos.html">Anterior: 1. Fundamentos y contexto</a><a class="step-button" rel="next" href="03-roles-raci.html">Siguiente: 3. Roles y RACI</a></nav>
+++++

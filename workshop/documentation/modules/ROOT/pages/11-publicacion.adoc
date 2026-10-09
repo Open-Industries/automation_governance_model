@@ -1,5 +1,9 @@
 = Publicación del portal
 
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="10-facilitacion.html">Anterior: Guía del facilitador y agenda</a><a class="step-button" rel="next" href="12-referencias.html">Siguiente: Referencias técnicas</a></nav>
+++++
+
 == Arquitectura de documentación
 `docs/*.md` es el contenido canónico. `scripts/build_site.py` genera un portal local estático y fuentes AsciiDoc de Antora a partir del mismo contenido. `default-site.yml` usa el tema Showroom v2.0.2 de la página de referencia. `ui-supplemental/` reemplaza cabecera y footer por Open Demo Platform y carga la imagen original sin editarla.
 
@@ -28,3 +32,7 @@ No requiere red para construir la vista local. La construcción Antora requiere 
 
 == Mantenimiento
 Editar Markdown, regenerar documentación, revisar links y abrir PR. Al actualizar tema o dependencias, probar navegación, móvil, tablas, código, presentación y marca Open Demo Platform. Los checks locales no sustituyen un deployment exitoso.
+
+++++
+<nav class="workshop-pagination" aria-label="Navegación del workshop"><a class="step-button" rel="prev" href="10-facilitacion.html">Anterior: Guía del facilitador y agenda</a><a class="step-button" rel="next" href="12-referencias.html">Siguiente: Referencias técnicas</a></nav>
+++++

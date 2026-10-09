@@ -11,6 +11,6 @@ Estas fuentes sustentan las funciones de plataforma y herramientas. Las reglas d
 - [GitHub CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners): limitaciones y requisitos de owners.
 - [GitHub Pages publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site): configuración del despliegue.
 - [Tema Showroom](https://github.com/rhpds/rhdp_showroom_theme): bundle de Demo Platform utilizado como referencia visual.
-- [Workshop de referencia](https://psehgaft.github.io/ocp-ansible-agent-installer/ocp-redfish-installer/main/index.html): identidad visual original que se adapta a Fedora.
+- [Workshop de referencia](https://psehgaft.github.io/ocp-ansible-agent-installer/ocp-redfish-installer/main/index.html): identidad visual original que se adapta a Open Demo Platform.
 
 Revisado para preparar el workshop el 7 de octubre de 2026. La versión instalada del controller y sus módulos debe confirmarse durante preparación.

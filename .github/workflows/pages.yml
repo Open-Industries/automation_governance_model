@@ -32,7 +32,7 @@ jobs:
           cp -r public/slides www/slides
           cp -r public/downloads www/downloads
           touch www/.nojekyll
-      - name: Validate published links and Fedora branding
+      - name: Validate published links and Open Demo Platform branding
         run: python scripts/validate_built_site.py www
       - uses: actions/upload-pages-artifact@v3
         with:

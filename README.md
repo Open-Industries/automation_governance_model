@@ -1,6 +1,8 @@
-# Fedora Demo Platform — Modelo de gobierno de automatización
+# Open Demo Platform — Modelo de gobierno de automatización
 
-Workshop comunitario de Open Industries para institucionalizar el gobierno de Ansible / AAP en siete dominios. Identidad Fedora con fedora azul de Heber Romero. Material en español.
+![Logo de Open Demo Platform](ui-supplemental/img/open-demo-platform.png)
+
+Workshop comunitario de Open Industries para institucionalizar el gobierno de Ansible / AAP en siete dominios. Identidad Open Demo Platform con el logo de gobierno de automatización proporcionado por Heber Romero. Material en español.
 
 ## Contenido
 - [Inicio y preparación](docs/00-inicio.md)
@@ -29,7 +31,7 @@ python scripts/build_site.py
 python scripts/validate_content.py
 python -m http.server 8000 --directory public
 ```
-Abrir localhost:8000. Para publicar, el workflow Antora usa el tema Showroom con marca Fedora. El administrador debe habilitar Pages como GitHub Actions. La URL sólo queda activa después de un deployment exitoso. Consultar `docs/11-publicacion.md`.
+Abrir localhost:8000. Para publicar, el workflow Antora usa el tema Showroom con marca Open Demo Platform. El administrador debe habilitar Pages como GitHub Actions. La URL sólo queda activa después de un deployment exitoso. Consultar `docs/11-publicacion.md`.
 
 ## Verificación
 ```bash
@@ -41,4 +43,4 @@ python scripts/validate_raci.py templates/raci-editable.csv
 CI valida contenido, lint, Molecule y secrets. Las reglas de protección y equipos de CODEOWNERS se configuran en GitHub; no quedan activados por este README.
 
 ## Alcance
-Agenda compacta de ocho horas con preparación previa y versión ampliada de 9 h 15 min–11 h 15 min más pausas. Fedora identifica la marca de este workshop comunitario. Los nombres técnicos de AAP y los enlaces a documentación oficial se conservan.
+Agenda compacta de ocho horas con preparación previa y versión ampliada de 9 h 15 min–11 h 15 min más pausas. Open Demo Platform identifica la marca de este workshop comunitario. Los nombres técnicos de AAP y los enlaces a documentación oficial se conservan.

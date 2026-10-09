@@ -1,7 +1,7 @@
 # Publicación del portal
 
 ## Arquitectura de documentación
-`docs/*.md` es el contenido canónico. `scripts/build_site.py` genera un portal local estático y fuentes AsciiDoc de Antora a partir del mismo contenido. `default-site.yml` usa el tema Showroom v2.0.2 de la página de referencia. `ui-supplemental/` reemplaza cabecera y footer por Fedora y carga la imagen original sin editarla.
+`docs/*.md` es el contenido canónico. `scripts/build_site.py` genera un portal local estático y fuentes AsciiDoc de Antora a partir del mismo contenido. `default-site.yml` usa el tema Showroom v2.0.2 de la página de referencia. `ui-supplemental/` reemplaza cabecera y footer por Open Demo Platform y carga la imagen original sin editarla.
 
 `workshop/documentation/` contiene componente Antora `automation-governance`, versión `main`. La ruta publicada del inicio es `automation-governance/main/index.html`. El workflow copia presentación y recursos descargables al output Antora.
 
@@ -26,4 +26,4 @@ python -m http.server 8000 --directory public
 No requiere red para construir la vista local. La construcción Antora requiere descargar su CLI y el bundle UI en CI. Se recomienda cache controlado o mirror para entornos desconectados.
 
 ## Mantenimiento
-Editar Markdown, regenerar documentación, revisar links y abrir PR. Al actualizar tema o dependencias, probar navegación, móvil, tablas, código, presentación y marca Fedora. Los checks locales no sustituyen un deployment exitoso.
+Editar Markdown, regenerar documentación, revisar links y abrir PR. Al actualizar tema o dependencias, probar navegación, móvil, tablas, código, presentación y marca Open Demo Platform. Los checks locales no sustituyen un deployment exitoso.

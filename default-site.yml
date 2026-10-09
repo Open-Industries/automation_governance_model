@@ -1,6 +1,6 @@
 ---
 site:
-  title: Fedora Demo Platform — Gobierno de automatización
+  title: Open Demo Platform — Gobierno de automatización
   start_page: automation-governance::index.adoc
 content:
   sources:

@@ -35,7 +35,7 @@ CODEOWNERS solicita revisiones, pero no garantiza que Seguridad y el dueño apru
 - `ansible-lint`: nombres FQCN, sintaxis de playbooks y reglas de estilo. `yamllint` incluye workflows y plantillas.
 - `molecule`: converge, verificación e idempotencia del rol local sobre siete dominios. No prueba APIs reales.
 - `security-scan`: detección de secrets con Gitleaks. No sustituye revisión de IAM, hardening o dependencias.
-- `docs`: construye y publica Antora con tema Showroom y marca Fedora.
+- `docs`: construye y publica Antora con tema Showroom y marca Open Demo Platform.
 
 El pipeline no publica credentials ni hace cambios en destinos reales. Las pruebas de integración del proveedor usan runners controlados, cuentas mínimas y un entorno no productivo aislado.
 

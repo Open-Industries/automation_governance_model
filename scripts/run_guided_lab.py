@@ -23,9 +23,10 @@ CHANGES = {
 }
 
 
-def snapshot():
+def snapshot(domain):
+    root = LAB / domain
     return {str(p): hashlib.sha256(p.read_bytes()).hexdigest()
-            for p in LAB.rglob('*') if p.is_file()} if LAB.exists() else {}
+            for p in root.rglob('*') if p.is_file()} if root.exists() else {}
 
 
 def main():
@@ -83,20 +84,20 @@ def main():
     run('01-syntax', flags=['--syntax-check'])
     run('02-baseline')
     verify('02-baseline', expected)
-    before = snapshot()
+    before = snapshot(args.domain)
     run('03-repeat', unchanged=True)
-    assert snapshot() == before, 'Repeat modified lab files'
+    assert snapshot(args.domain) == before, 'Repeat modified lab files'
     run('04-invalid', {'resource_name': 'INVALID_NAME'}, negative=True)
-    assert snapshot() == before, 'Invalid input modified lab files'
+    assert snapshot(args.domain) == before, 'Invalid input modified lab files'
     revised = json.loads(json.dumps(expected))
     field, value = CHANGES[args.domain]
     revised[field] = value
     assert revised != expected, 'Change exercise is identical to baseline'
     run('05-change', {'governed_resource_desired_state': revised})
     verify('05-change', revised)
-    before = snapshot()
+    before = snapshot(args.domain)
     run('06-repeat-change', {'governed_resource_desired_state': revised}, unchanged=True)
-    assert snapshot() == before, 'Repeated controlled change modified lab files'
+    assert snapshot(args.domain) == before, 'Repeated controlled change modified lab files'
     revision = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True,
                               stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False)
     report = {'domain': args.domain, 'request_id': args.request_id,

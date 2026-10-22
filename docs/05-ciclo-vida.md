@@ -4,7 +4,7 @@
 | Etapa | Entrada | Entrega y gate |
 | --- | --- | --- |
 | Definición | Necesidad de negocio | Caso, owner y riesgo aprobado |
-| Diseño | Caso y destino | Threat model, inputs, output y recuperación |
+| Diseño | Caso y destino | Architecture description when needed, threat model, inputs, output y recuperación |
 | Desarrollo | Diseño acordado | Playbooks, roles y pruebas |
 | Validación | Commit candidato | CI y evidencia de seguridad |
 | Revisión | PR y evidencias | Peer, owner y Seguridad según riesgo |
@@ -16,6 +16,17 @@
 | Entrega | Resultado verificado | Artefacto saneado y notificación |
 | Aceptación | Output recibido | Confirmación del consumidor |
 | Operación | Historial de jobs | Métricas, revisión y retiro |
+
+## Gate de descripción arquitectónica
+
+Cuando una automatización introduce un servicio, cruza límites entre equipos o zonas de confianza, procesa datos sensibles o cambia una plataforma compartida, adjuntar o actualizar una descripción de arquitectura antes de aprobar la implementación. Usar la [plantilla de Architecture Description](https://github.com/Open-Industries/open-ecosystem-services/blob/main/docs/templates/architecture-description-template.md) como punto de partida. Registrar como mínimo:
+
+- alcance y límites del sistema, stakeholders y sus preocupaciones;
+- vistas relevantes de contexto, flujo de datos, despliegue y seguridad;
+- interfaces, dependencias y comportamiento ante fallos;
+- decisiones (ADRs), riesgos, responsable de operación y evidencia de validación.
+
+La revisión de arquitectura informa las aprobaciones de pares, Seguridad, dueño del servicio y control de cambios; no sustituye esos gates. Para cambios pequeños que no modifican límites ni preocupaciones arquitectónicas, actualizar el ADR o registro de cambio existente y enlazar la evidencia, sin crear un documento completo.
 
 ## Preparación en AAP o AWX
 AAP Admin registra versión de plataforma, collections y EE del laboratorio. La guía se refiere a objetos de automation controller. AAP 2.5 puede mostrar navegación integrada diferente de AWX. Validar la compatibilidad con la versión instalada antes de usar módulos de configuración.

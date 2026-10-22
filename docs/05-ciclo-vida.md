@@ -4,7 +4,7 @@
 | Etapa | Entrada | Entrega y gate |
 | --- | --- | --- |
 | Definición | Necesidad de negocio | Caso, owner y riesgo aprobado |
-| Diseño | Caso y destino | Architecture description when needed, threat model, inputs, output y recuperación |
+| Diseño | Caso y destino | Descripción de arquitectura cuando aplique, threat model, inputs, output y recuperación |
 | Desarrollo | Diseño acordado | Playbooks, roles y pruebas |
 | Validación | Commit candidato | CI y evidencia de seguridad |
 | Revisión | PR y evidencias | Peer, owner y Seguridad según riesgo |

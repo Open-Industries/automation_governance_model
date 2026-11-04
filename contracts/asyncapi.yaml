@@ -1,0 +1,58 @@
+asyncapi: 2.6.0
+info:
+  title: Open Automation Governance — Reference Governance Core Platform — Domain Events
+  version: 1.0.0
+  description: >
+    CloudEvents 1.0 envelopes published by the platform's bounded contexts.
+    Consumers MUST be idempotent and tolerate unknown fields. Ordering is
+    guaranteed only per aggregate (the CloudEvent `subject`).
+servers:
+  production:
+    url: kafka://broker.governance.svc.cluster.local:9092
+    protocol: kafka
+    description: Kafka-backed Knative Broker in production; Knative Broker abstraction elsewhere.
+channels:
+  automation.created:
+    publish:
+      operationId: on-automation-created
+      message: { $ref: '#/components/messages/Generic' }
+  budget.created:
+    publish:
+      operationId: on-budget-created
+      message: { $ref: '#/components/messages/Generic' }
+  governance.created:
+    publish:
+      operationId: on-governance-created
+      message: { $ref: '#/components/messages/Generic' }
+  control.created:
+    publish:
+      operationId: on-control-created
+      message: { $ref: '#/components/messages/Generic' }
+  notification.created:
+    publish:
+      operationId: on-notification-created
+      message: { $ref: '#/components/messages/Generic' }
+  autorisk.evaluated:
+    publish:
+      operationId: on-autorisk-evaluated
+      message: { $ref: '#/components/messages/Generic' }
+  govcheck.evaluated:
+    publish:
+      operationId: on-govcheck-evaluated
+      message: { $ref: '#/components/messages/Generic' }
+components:
+  messages:
+    Generic: { payload: { $ref: '#/components/schemas/CloudEvent' } }
+  schemas:
+    CloudEvent:
+      type: object
+      required: [specversion, id, source, type, time]
+      properties:
+        specversion: { type: string, enum: ['1.0'] }
+        id: { type: string, format: uuid }
+        source: { type: string, example: '/automation_governance_model/service' }
+        type: { type: string, example: 'context.event' }
+        subject: { type: string, description: Aggregate id (ordering key). }
+        time: { type: string, format: date-time }
+        datacontenttype: { type: string, enum: [application/json] }
+        data: { type: object }

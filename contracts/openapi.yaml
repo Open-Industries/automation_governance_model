@@ -1,0 +1,66 @@
+openapi: 3.1.0
+info:
+  title: Open Automation Governance — Reference Governance Core Platform — aggregate contract
+  version: 1.0.0
+  description: >
+    Aggregate view of the platform's public REST contracts. The normative per-service
+    contracts are generated from code by Quarkus SmallRye OpenAPI at `/openapi` on each
+    service; CI diffs them against this file (see docs/api/api-standards.md).
+    Conventions: RFC 9457 errors, Idempotency-Key on creates, lifecycle transitions
+    take no body, explicit units on every quantity, all data synthetic.
+servers:
+  - url: https://api.example.org/api/v1
+    description: Production (per adopter)
+security:
+  - bearerAuth: []
+paths:
+  /automations:
+    post:
+      operationId: create-automation
+      summary: "Registry of governed automations with risk tiers and approval lifecycle."
+      responses:
+        '201': { description: Created }
+        '400': { $ref: '#/components/responses/Problem' }
+  /execution-budgets:
+    post:
+      operationId: create-budget
+      summary: "Guarded monthly execution budgets per automation and the run charges against them."
+      responses:
+        '201': { description: Created }
+        '400': { $ref: '#/components/responses/Problem' }
+  /governance-rules:
+    post:
+      operationId: create-governance
+      summary: "Decision rules binding risk tiers to run-volume and failure envelopes."
+      responses:
+        '201': { description: Created }
+        '400': { $ref: '#/components/responses/Problem' }
+  /controls:
+    post:
+      operationId: create-control
+      summary: "Catalogue of governance controls and their review cycles."
+      responses:
+        '201': { description: Created }
+        '400': { $ref: '#/components/responses/Problem' }
+  /notifications:
+    post:
+      operationId: dispatch-notification
+      summary: Dispatch a notification
+      responses:
+        '202': { description: Accepted }
+components:
+  securitySchemes:
+    bearerAuth: { type: http, scheme: bearer, bearerFormat: JWT }
+  responses:
+    Problem:
+      description: RFC 9457 problem details
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            required: [type, title, status]
+            properties:
+              type: { type: string }
+              title: { type: string }
+              status: { type: integer }
+              detail: { type: string }
